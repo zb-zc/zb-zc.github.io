@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title></title>
+    <url>/2022/04/29/2/</url>
+    <content><![CDATA[<p>#############################################################</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2022/04/28/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/04/29/%E5%AD%97%E7%AC%A6%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/</url>
+    <content><![CDATA[<p><strong>应用程序函数在对应的驱动中都有之相对应的函数，每一个系统调用，在驱动中都有之对应的一个驱动函数。在linux内核文件include&#x2F;linux&#x2F;fs.h中有个叫做file_operations的结构体，此结构体就是linux内核驱动操作函数集合</strong><br><strong>明确几个概念：</strong>    </p>
+<ol>
+<li>系统调用：内核的接口被称为系统调用，公用的函数库构建在系统调用接口之上，应用程序既可以使用公共函数库也可以使用系统调用  </li>
+<li>字符设备就是一个一个字节，按照字节流进行读写操作的设备。比如我们最常见的点灯、按键、 IIC、 SPI，LCD*  等等都是字符设备</li>
+</ol>
+<h1 id="字符设备驱动的组成"><a href="#字符设备驱动的组成" class="headerlink" title="字符设备驱动的组成"></a>字符设备驱动的组成</h1><h4 id="字符设备驱动模块的加载与卸载"><a href="#字符设备驱动模块的加载与卸载" class="headerlink" title="字符设备驱动模块的加载与卸载"></a>字符设备驱动模块的加载与卸载</h4><p>在字符设备驱动模块加载函数中应该实现设备号的申请和cdev的注册，而在卸载函数中应实现设备号的释放和cdev的注销  </p>
+<ol>
+<li><p>cdev结构体<br> 在linux内核中使用cdev结构体描述一个字符设备，cdev结构体的定义如下所示   </p>
+<p> &lt;include&#x2F;linux&#x2F;cdev.h&gt;<br> struct cdev {<br> struct kobject kobj;                  &#x2F;&#x2F;内嵌的内核对象.<br> struct module *owner;                 &#x2F;&#x2F;该字符设备所在的内核模块的对象指针.<br> const struct file_operations *ops;    &#x2F;&#x2F;该结构描述了字符设备所能实现的方法，是极为关键的一个结构体.<br> struct list_head list;                &#x2F;&#x2F;用来将已经向内核注册的所有字符设备形成链表.<br> dev_t dev;                            &#x2F;&#x2F;字符设备的设备号，由主设备号和次设备号构成.<br> unsigned int count;                   &#x2F;&#x2F;隶属于同一主设备号的次设备号的个数.<br> }</p>
+</li>
+</ol>
+<p><strong>字符设备驱动模块加载与卸载函数模板</strong>  </p>
+<pre><code>struct globalmem_dev &#123;
+struct cdev cdev;
+unsigned char mem[GLOBALMEM_SIZE];
+&#125;;
+
+struct globalmem_dev *globalmem_devp;
+
+static int __init globalmem_init(void)
+&#123;
+int ret;
+dev_t devno = MKDEV(globalmem_major, 0);
+
+if (globalmem_major)
+    ret = register_chrdev_region(devno, 1, &quot;globalmem&quot;);
+else &#123;
+    ret = alloc_chrdev_region(&amp;devno, 0, 1, &quot;globalmem&quot;);
+    globalmem_major = MAJOR(devno);
+&#125;
+if (ret &lt; 0)
+    return ret;
+
+globalmem_devp = kzalloc(sizeof(struct globalmem_dev), GFP_KERNEL);
+if (!globalmem_devp) &#123;
+    ret = -ENOMEM;
+    goto fail_malloc;
+&#125;
+
+globalmem_setup_cdev(globalmem_devp, 0);
+return 0;
+
+fail_malloc:
+unregister_chrdev_region(devno, 1);
+return ret;
+&#125;
+module_init(globalmem_init);
+
+static void __exit globalmem_exit(void)
+&#123;
+cdev_del(&amp;globalmem_devp-&gt;cdev);
+kfree(globalmem_devp);
+unregister_chrdev_region(MKDEV(globalmem_major, 0), 1);
+&#125;
+module_exit(globalmem_exit);
+
+MODULE_AUTHOR(&quot;Barry Song &lt;baohua@kernel.org&gt;&quot;);
+MODULE_LICENSE(&quot;GPL v2&quot;);
+</code></pre>
+<ol start="2">
+<li>字符设备驱动的file_operations结构体中的成员函数<br>字符设备驱动的file_operations结构体中的成员函数是字符设备驱动函数与内核虚拟文件系统的接口，是用户空间对Linux进行系统调用的最终落实着</li>
+</ol>
+<p><strong>模板</strong>  </p>
+<pre><code>    static int globalmem_open(struct inode *inode, struct file *filp)
+    &#123;
+    filp-&gt;private_data = globalmem_devp;
+    return 0;
+    &#125;
+
+    static int globalmem_release(struct inode *inode, struct file *filp)
+    &#123;
+    return 0;
+    &#125;
+
+    static long globalmem_ioctl(struct file *filp, unsigned int cmd,
+            unsigned long arg)
+    &#123;
+    struct globalmem_dev *dev = filp-&gt;private_data;
+
+    switch (cmd) &#123;
+        case MEM_CLEAR:
+        memset(dev-&gt;mem, 0, GLOBALMEM_SIZE);
+        printk(KERN_INFO &quot;globalmem is set to zero\n&quot;);
+        break;
+
+        default:
+        return -EINVAL;
+    &#125;
+
+    return 0;
+    &#125;
+
+    static ssize_t globalmem_read(struct file *filp, char __user * buf, size_t size,loff_t * ppos)  
+    &#123;
+    unsigned long p = *ppos;
+    unsigned int count = size;
+    int ret = 0;
+    struct globalmem_dev *dev = filp-&gt;private_data;
+
+    if (p &gt;= GLOBALMEM_SIZE)
+    return 0;
+    if (count &gt; GLOBALMEM_SIZE - p)
+    count = GLOBALMEM_SIZE - p;
+
+    if (copy_to_user(buf, dev-&gt;mem + p, count)) &#123;
+    ret = -EFAULT;
+    &#125; else &#123;
+    *ppos += count;
+    ret = count;
+
+    printk(KERN_INFO &quot;read %u bytes(s) from %lu\n&quot;, count, p);
+    &#125;
+
+    return ret;
+    &#125;
+
+    static ssize_t globalmem_write(struct file *filp, const char __user * buf,
+               size_t size, loff_t * ppos)
+    &#123;
+    unsigned long p = *ppos;
+    unsigned int count = size;
+    int ret = 0;
+    struct globalmem_dev *dev = filp-&gt;private_data;
+
+    if (p &gt;= GLOBALMEM_SIZE)
+    return 0;
+    if (count &gt; GLOBALMEM_SIZE - p)
+    count = GLOBALMEM_SIZE - p;
+
+    if (copy_from_user(dev-&gt;mem + p, buf, count))
+    ret = -EFAULT;
+    else &#123;
+    *ppos += count;
+    ret = count;
+
+    printk(KERN_INFO &quot;written %u bytes(s) from %lu\n&quot;, count, p);
+    &#125;
+
+    return ret;
+    &#125;
+
+    static loff_t globalmem_llseek(struct file *filp, loff_t offset, int orig)
+    &#123;
+    loff_t ret = 0;
+    switch (orig) &#123;
+    case 0:
+    if (offset &lt; 0) &#123;
+        ret = -EINVAL;
+        break;
+    &#125;
+    if ((unsigned int)offset &gt; GLOBALMEM_SIZE) &#123;
+        ret = -EINVAL;
+        break;
+    &#125;
+    filp-&gt;f_pos = (unsigned int)offset;
+    ret = filp-&gt;f_pos;
+    break;
+    case 1:
+    if ((filp-&gt;f_pos + offset) &gt; GLOBALMEM_SIZE) &#123;
+        ret = -EINVAL;
+        break;
+    &#125;
+    if ((filp-&gt;f_pos + offset) &lt; 0) &#123;
+        ret = -EINVAL;
+        break;
+    &#125;
+    filp-&gt;f_pos += offset;
+    ret = filp-&gt;f_pos;
+    break;
+    default:
+    ret = -EINVAL;
+    break;
+    &#125;
+    return ret;
+     &#125;
+
+    static const struct file_operations globalmem_fops = &#123;
+    .owner = THIS_MODULE,
+    .llseek = globalmem_llseek,
+    .read = globalmem_read,
+    .write = globalmem_write,
+    .unlocked_ioctl = globalmem_ioctl,
+    .open = globalmem_open,
+    .release = globalmem_release,
+     &#125;;
+</code></pre>
+]]></content>
+  </entry>
+</search>
