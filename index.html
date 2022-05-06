@@ -183,7 +183,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/06/%E5%AD%97%E7%AC%A6%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/" class="post-title-link" itemprop="url">未命名</a>
+          <a href="/2022/05/06/%E5%AD%97%E7%AC%A6%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/" class="post-title-link" itemprop="url">字符驱动设备</a>
         </h2>
 
         <div class="post-meta-container">
@@ -194,7 +194,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-05-06 19:22:20" itemprop="dateCreated datePublished" datetime="2022-05-06T19:22:20+08:00">2022-05-06</time>
+      <time title="创建时间：2022-05-06 20:22:19" itemprop="dateCreated datePublished" datetime="2022-05-06T20:22:19+08:00">2022-05-06</time>
     </span>
 
   
@@ -207,8 +207,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <hr>
-<h2 id="title-字符驱动设备"><a href="#title-字符驱动设备" class="headerlink" title="title:字符驱动设备 "></a>title:字符驱动设备 </h2><p><strong>应用程序函数在对应的驱动中都有之相对应的函数，每一个系统调用，在驱动中都有之对应的一个驱动函数。在linux内核文件include&#x2F;linux&#x2F;fs.h中有个叫做file_operations的结构体，此结构体就是linux内核驱动操作函数集合</strong><br><strong>明确几个概念：</strong>    </p>
+          <p>应用程序函数在对应的驱动中都有之相对应的函数，每一个系统调用，在驱动中都有之对应的一个驱动函数。在linux内核文件include&#x2F;linux&#x2F;fs.h中有个叫做file_operations的结构体，此结构体就是linux内核驱动操作函数集合</p>
+<p><strong>明确几个概念：</strong>    </p>
 <ol>
 <li>系统调用：内核的接口被称为系统调用，公用的函数库构建在系统调用接口之上，应用程序既可以使用公共函数库也可以使用系统调用  </li>
 <li>字符设备就是一个一个字节，按照字节流进行读写操作的设备。比如我们最常见的点灯、按键、 IIC、 SPI，LCD*  等等都是字符设备</li>
