@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="升级5.3内核以后，板子不支持热插拔了。所以调试一下USB驱动   USB3503A 驱动程序结构思维导图如下：  3503A驱动程序思维导图[点击下载](&#x2F;download&#x2F;usb hub驱动（3503.c）.xmind)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="USB HUB的驱动">
+<meta property="og:url" content="http://example.com/2022/05/21/USBHUB%E9%A9%B1%E5%8A%A83503A/index.html">
+<meta property="og:site_name" content="嵌入式">
+<meta property="og:description" content="升级5.3内核以后，板子不支持热插拔了。所以调试一下USB驱动   USB3503A 驱动程序结构思维导图如下：  3503A驱动程序思维导图[点击下载](&#x2F;download&#x2F;usb hub驱动（3503.c）.xmind)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/usb%20hub%E9%A9%B1%E5%8A%A8%EF%BC%883503.c%EF%BC%89.png?raw=true">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/usb_phyclock144224.png?raw=true">
+<meta property="article:published_time" content="2022-05-21T12:12:56.284Z">
+<meta property="article:modified_time" content="2022-05-21T12:12:56.296Z">
+<meta property="article:author" content="赵博">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/usb%20hub%E9%A9%B1%E5%8A%A8%EF%BC%883503.c%EF%BC%89.png?raw=true">
+
+
+<link rel="canonical" href="http://example.com/2022/05/21/USBHUB%E9%A9%B1%E5%8A%A83503A/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/05/21/USBHUB%E9%A9%B1%E5%8A%A83503A/","path":"2022/05/21/USBHUB驱动3503A/","title":"USB HUB的驱动"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>USB HUB的驱动 | 嵌入式</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">嵌入式</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录每一次成长</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">0</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">1</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">4</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#USB3503A-USB-HUB%E9%A9%B1%E5%8A%A8"><span class="nav-number">1.</span> <span class="nav-text">USB3503A USB HUB驱动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90usb3503-c%E9%A9%B1%E5%8A%A8"><span class="nav-number">1.1.</span> <span class="nav-text">分析usb3503.c驱动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#I2C%E9%83%A8%E5%88%86"><span class="nav-number">1.1.1.</span> <span class="nav-text">I2C部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Platform-driver%E9%83%A8%E5%88%86"><span class="nav-number">1.1.2.</span> <span class="nav-text">Platform driver部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#usb3503-probe%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.3.</span> <span class="nav-text">usb3503_probe函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E6%A0%91"><span class="nav-number">1.2.</span> <span class="nav-text">设备树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#usb%E9%A9%B1%E5%8A%A8%E7%9A%84%E8%AE%BE%E5%A4%87%E6%A0%91"><span class="nav-number">1.2.1.</span> <span class="nav-text">usb驱动的设备树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#usbphy"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">usbphy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EHCI"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">EHCI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3503"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">3503</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">赵博</p>
+  <div class="site-description" itemprop="description">果淉菓</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/21/USBHUB%E9%A9%B1%E5%8A%A83503A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="赵博">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="嵌入式">
+      <meta itemprop="description" content="果淉菓">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="USB HUB的驱动 | 嵌入式">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          USB HUB的驱动
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-21 20:12:56" itemprop="dateCreated datePublished" datetime="2022-05-21T20:12:56+08:00">2022-05-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <ol>
+<li>升级5.3内核以后，板子不支持热插拔了。所以调试一下USB驱动  </li>
+<li>USB3503A 驱动程序结构思维导图如下：<br><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/usb%20hub%E9%A9%B1%E5%8A%A8%EF%BC%883503.c%EF%BC%89.png?raw=true" alt="image"></li>
+</ol>
+<p><strong><font color=Red>3503A驱动程序思维导图</font></strong><br>[点击下载](&#x2F;download&#x2F;usb hub驱动（3503.c）.xmind)  </p>
+<span id="more"></span>
+
+
+<h1 id="USB3503A-USB-HUB驱动"><a href="#USB3503A-USB-HUB驱动" class="headerlink" title="USB3503A USB HUB驱动"></a>USB3503A USB HUB驱动</h1><p>根据核心板原理图可知。usb hub所用芯片为USB3503A,从网上下载下来此芯片的手册。如下<br>[点此下载]（&#x2F;download&#x2F;3503.pdf）<br>查看linux是否支持了此驱动：find .&#x2F; -name “<em>3503</em>“ 输出如下  </p>
+<pre><code>./include/config/usb/hsic/usb3503.h
+./include/linux/platform_data/usb3503.h
+./drivers/usb/misc/.usb3503.o.cmd
+./drivers/usb/misc/usb3503.o
+./drivers/usb/misc/usb3503.c
+./Documentation/devicetree/bindings/usb/usb3503.txt 
+</code></pre>
+<p>可知linux中已经支持了驱动，但是是3503的驱动，3503A是否能用？  </p>
+<h2 id="分析usb3503-c驱动"><a href="#分析usb3503-c驱动" class="headerlink" title="分析usb3503.c驱动"></a>分析usb3503.c驱动</h2><p>虽然内核支持了usb3503的驱动，但是分析一下也可以对驱动框架多一些了解  </p>
+<h3 id="I2C部分"><a href="#I2C部分" class="headerlink" title="I2C部分"></a>I2C部分</h3><ol>
+<li><p>i2c_add_driver 注册i2c驱动</p>
+</li>
+<li><p>初始化i2c驱动如下 </p>
+<pre><code> static struct platform_driver usb3503_platform_driver = &#123;
+ .driver = &#123;
+     .name = USB3503_I2C_NAME,
+     .of_match_table = of_match_ptr(usb3503_of_match),
+     .pm = &amp;usb3503_platform_pm_ops,
+ &#125;,
+ .probe		= usb3503_platform_probe,
+ .remove		= usb3503_platform_remove,
+ &#125;;  
+</code></pre>
+</li>
+<li><p>初始化device_driver结构体中的函数如下所示：</p>
+<pre><code> .driver = &#123;
+ .name = USB3503_I2C_NAME,
+ .of_match_table = of_match_ptr(usb3503_of_match),
+ .pm = &amp;usb3503_platform_pm_ops,
+ &#125;,
+</code></pre>
+<p> of_match_table 设备树匹配函数如下所示  </p>
+<pre><code> static const struct of_device_id usb3503_of_match[] = &#123;
+ &#123; .compatible = &quot;smsc,usb3503&quot;, &#125;,
+ &#123; .compatible = &quot;smsc,usb3503a&quot;, &#125;,
+ &#123;&#125;,
+  &#125;;
+</code></pre>
+</li>
+</ol>
+<p>4.probe函数 如下所示  </p>
+<pre><code>static int usb3503_i2c_probe(struct i2c_client *i2c,
+                const struct i2c_device_id *id)
+&#123;
+    struct usb3503 *hub;
+    int err;
+
+    hub = devm_kzalloc(&amp;i2c-&gt;dev, sizeof(struct usb3503), GFP_KERNEL);
+    if (!hub)
+        return -ENOMEM;
+
+    i2c_set_clientdata(i2c, hub);
+    hub-&gt;regmap = devm_regmap_init_i2c(i2c, &amp;usb3503_regmap_config);
+    if (IS_ERR(hub-&gt;regmap)) &#123;
+        err = PTR_ERR(hub-&gt;regmap);
+        dev_err(&amp;i2c-&gt;dev, &quot;Failed to initialise regmap: %d\n&quot;, err);
+        return err;
+    &#125;
+    hub-&gt;dev = &amp;i2c-&gt;dev;
+
+    return usb3503_probe(hub);
+&#125;
+/**********************************************************************************
+devm_kzalloc:函数 devm_kzalloc() 和kzalloc()一样都是内核内存分配函数，但是devm_kzalloc()是跟设备(device)有关的，当设备(device)被detached或者驱动(driver)卸载(unloaded)时，内存会被自动释放。另外，当内存不在使用时，可以使用函数devm_kfree()释放  
+i2c_set_clientdata:这个函数是赋值device结构体中的driver_data；是将自定义的设备结构dev赋给设备驱动client的私有指针，目的是什么呢，我猜测是用来区别其他驱动client.内核的注释是@driver_data: Private pointer for driver specific info.
+devm_regmap_init_i2c:详细见regmap笔记
+***********************************************************************************/
+</code></pre>
+<h3 id="Platform-driver部分"><a href="#Platform-driver部分" class="headerlink" title="Platform driver部分"></a>Platform driver部分</h3><ol>
+<li><p>platform_driver_register函数向 Linux内核注册一个 platform驱动  </p>
+</li>
+<li><p>初始化platform_driver驱动，如下  </p>
+<pre><code> static struct platform_driver usb3503_platform_driver = &#123;
+     .driver = &#123;
+         .name = USB3503_I2C_NAME,
+         .of_match_table = of_match_ptr(usb3503_of_match),
+         .pm = &amp;usb3503_platform_pm_ops,
+     &#125;,
+     .probe		= usb3503_platform_probe,
+     .remove		= usb3503_platform_remove,
+ &#125;;
+</code></pre>
+</li>
+<li><p>初始化device_driver结构体中的函数如下所示：  </p>
+<pre><code> .driver = &#123;
+         .name = USB3503_I2C_NAME,
+         .of_match_table = of_match_ptr(usb3503_of_match),
+         .pm = &amp;usb3503_platform_pm_ops,
+     &#125;,
+</code></pre>
+<p> of_match_table 设备树匹配函数如下所示  </p>
+<pre><code> static const struct of_device_id usb3503_of_match[] = &#123;
+ &#123; .compatible = &quot;smsc,usb3503&quot;, &#125;,
+ &#123; .compatible = &quot;smsc,usb3503a&quot;, &#125;,
+ &#123;&#125;,
+  &#125;;
+</code></pre>
+</li>
+</ol>
+<p>4.probe函数 如下所示 </p>
+<pre><code>    static int usb3503_platform_probe(struct platform_device *pdev)
+    &#123;
+        struct usb3503 *hub;
+
+        hub = devm_kzalloc(&amp;pdev-&gt;dev, sizeof(struct usb3503), GFP_KERNEL);
+        if (!hub)
+            return -ENOMEM;
+        hub-&gt;dev = &amp;pdev-&gt;dev;
+        platform_set_drvdata(pdev, hub);
+
+        return usb3503_probe(hub);
+    &#125;
+</code></pre>
+<h3 id="usb3503-probe函数"><a href="#usb3503-probe函数" class="headerlink" title="usb3503_probe函数"></a>usb3503_probe函数</h3><p><strong>由I2C和Platform driver部分最终都指向usb3503_probe函数，usb3503_probe函数如下</strong></p>
+<pre><code>    static int usb3503_probe(struct usb3503 *hub)
+    &#123;
+        struct device *dev = hub-&gt;dev;
+        struct usb3503_platform_data *pdata = dev_get_platdata(dev);
+        struct device_node *np = dev-&gt;of_node;
+        int err;
+        u32 mode = USB3503_MODE_HUB;
+        const u32 *property;
+        int len;
+
+        if (pdata) &#123;
+            hub-&gt;port_off_mask	= pdata-&gt;port_off_mask;
+            hub-&gt;gpio_intn		= pdata-&gt;gpio_intn;
+            hub-&gt;gpio_connect	= pdata-&gt;gpio_connect;
+            hub-&gt;gpio_reset		= pdata-&gt;gpio_reset;
+            hub-&gt;mode		= pdata-&gt;initial_mode;
+        &#125; else if (np) &#123;
+            u32 rate = 0;
+            hub-&gt;port_off_mask = 0;
+
+            if (!of_property_read_u32(np, &quot;refclk-frequency&quot;, &amp;rate)) &#123;
+                switch (rate) &#123;
+                case 38400000:
+                case 26000000:
+                case 19200000:
+                case 12000000:
+                    hub-&gt;secondary_ref_clk = 0;
+                    break;
+                case 24000000:
+                case 27000000:
+                case 25000000:
+                case 50000000:
+                    hub-&gt;secondary_ref_clk = 1;
+                    break;
+                default:
+                    dev_err(dev,
+                        &quot;unsupported reference clock rate (%d)\n&quot;,
+                        (int) rate);
+                    return -EINVAL;
+                &#125;
+            &#125;
+
+            hub-&gt;clk = devm_clk_get_optional(dev, &quot;refclk&quot;);
+            if (IS_ERR(hub-&gt;clk)) &#123;
+                dev_err(dev, &quot;unable to request refclk (%ld)\n&quot;,
+                        PTR_ERR(hub-&gt;clk));
+                return PTR_ERR(hub-&gt;clk);
+            &#125;
+
+            if (rate != 0) &#123;
+                err = clk_set_rate(hub-&gt;clk, rate);
+                if (err) &#123;
+                    dev_err(dev,
+                        &quot;unable to set reference clock rate to %d\n&quot;,
+                        (int)rate);
+                    return err;
+                &#125;
+            &#125;
+
+            err = clk_prepare_enable(hub-&gt;clk);
+            if (err) &#123;
+                dev_err(dev, &quot;unable to enable reference clock\n&quot;);
+                return err;
+            &#125;
+
+            property = of_get_property(np, &quot;disabled-ports&quot;, &amp;len);
+            if (property &amp;&amp; (len / sizeof(u32)) &gt; 0) &#123;
+                int i;
+                for (i = 0; i &lt; len / sizeof(u32); i++) &#123;
+                    u32 port = be32_to_cpu(property[i]);
+                    if ((1 &lt;= port) &amp;&amp; (port &lt;= 3))
+                        hub-&gt;port_off_mask |= (1 &lt;&lt; port);
+                &#125;
+            &#125;
+
+            hub-&gt;gpio_intn	= of_get_named_gpio(np, &quot;intn-gpios&quot;, 0);
+            if (hub-&gt;gpio_intn == -EPROBE_DEFER)
+                return -EPROBE_DEFER;
+            hub-&gt;gpio_connect = of_get_named_gpio(np, &quot;connect-gpios&quot;, 0);
+            if (hub-&gt;gpio_connect == -EPROBE_DEFER)
+                return -EPROBE_DEFER;
+            hub-&gt;gpio_reset = of_get_named_gpio(np, &quot;reset-gpios&quot;, 0);
+            if (hub-&gt;gpio_reset == -EPROBE_DEFER)
+                return -EPROBE_DEFER;
+            of_property_read_u32(np, &quot;initial-mode&quot;, &amp;mode);
+            hub-&gt;mode = mode;
+        &#125;
+
+        if (hub-&gt;port_off_mask &amp;&amp; !hub-&gt;regmap)
+            dev_err(dev, &quot;Ports disabled with no control interface\n&quot;);
+
+        if (gpio_is_valid(hub-&gt;gpio_intn)) &#123;
+            int val = hub-&gt;secondary_ref_clk ? GPIOF_OUT_INIT_LOW :
+                            GPIOF_OUT_INIT_HIGH;
+            err = devm_gpio_request_one(dev, hub-&gt;gpio_intn, val,
+                            &quot;usb3503 intn&quot;);
+            if (err) &#123;
+                dev_err(dev,
+                    &quot;unable to request GPIO %d as interrupt pin (%d)\n&quot;,
+                    hub-&gt;gpio_intn, err);
+                return err;
+            &#125;
+        &#125;
+
+        if (gpio_is_valid(hub-&gt;gpio_connect)) &#123;
+            err = devm_gpio_request_one(dev, hub-&gt;gpio_connect,
+                    GPIOF_OUT_INIT_LOW, &quot;usb3503 connect&quot;);
+            if (err) &#123;
+                dev_err(dev,
+                    &quot;unable to request GPIO %d as connect pin (%d)\n&quot;,
+                    hub-&gt;gpio_connect, err);
+                return err;
+            &#125;
+        &#125;
+
+        if (gpio_is_valid(hub-&gt;gpio_reset)) &#123;
+            err = devm_gpio_request_one(dev, hub-&gt;gpio_reset,
+                    GPIOF_OUT_INIT_LOW, &quot;usb3503 reset&quot;);
+            /* Datasheet defines a hardware reset to be at least 100us */
+            usleep_range(100, 10000);
+            if (err) &#123;
+                dev_err(dev,
+                    &quot;unable to request GPIO %d as reset pin (%d)\n&quot;,
+                    hub-&gt;gpio_reset, err);
+                return err;
+            &#125;
+        &#125;
+
+        usb3503_switch_mode(hub, hub-&gt;mode);
+
+        dev_info(dev, &quot;%s: probed in %s mode\n&quot;, __func__,
+                (hub-&gt;mode == USB3503_MODE_HUB) ? &quot;hub&quot; : &quot;standby&quot;);
+
+        return 0;
+    &#125;
+</code></pre>
+<p><strong>usb3503_probe函数详解</strong><br><strong>1. dev_get_platdata函数如下：</strong> </p>
+<pre><code>        static inline void *dev_get_platdata(const struct device *dev)
+    &#123;
+        return dev-&gt;platform_data;
+    &#125;
+
+对于platform_data 内核注释如下  
+
+    @platform_data: Platform data specific to the device.
+    Example: For devices on custom boards, as typical of embedded and SOC based hardware, Linux often uses platform_data to point to board-specific structures describing devices and how they are wired.  That can include what ports are available, chip variants, which GPIO pins act in what additional roles, and so on.  This shrinks the &quot;Board Support Packages&quot; (BSPs) and minimizes board-specific #ifdefs in drivers.
+可知platform_data为设备特定的平台数据  
+platform_data指向特定于板的结构，描述设备及其连接方式。 这可能包括可用的端口、芯片变体、GPIO引脚的附加作用等等  
+</code></pre>
+<p><strong>2. of_property_read_u32()</strong><br>这个函数是为了读取设备树的属性，函数如下  </p>
+<pre><code>static inline int of_property_read_u32(const struct device_node *np,
+                    const char *propname,
+                    u32 *out_value)
+&#123;
+    return of_property_read_u32_array(np, propname, out_value, 1);
+&#125;
+</code></pre>
+<p>内核对于此函数的注释如下  </p>
+<pre><code>/**
+* of_property_read_bool - Find a property
+* @np:		device node from which the property value is to be read.
+* @propname:	name of the property to be searched.
+* @out_value: 设备树属性的值（指针）
+* Search for a property in a device node.
+* Returns true if the property exists false otherwise.
+*/
+</code></pre>
+<p><strong>3. devm_clk_get_optional函数</strong></p>
+<pre><code>struct clk *devm_clk_get_optional(struct device *dev, const char *id);
+</code></pre>
+<p>下面是内核源码中的注释</p>
+<pre><code>/**
+* devm_clk_get_optional - lookup and obtain a managed reference to an optional
+*			   clock producer.
+* @dev: device for clock &quot;consumer&quot;
+* @id: clock consumer ID
+*
+* Behaves the same as devm_clk_get() except where there is no clock producer.
+* In this case, instead of returning -ENOENT, the function returns NULL.
+*/
+</code></pre>
+<p>函数调用关系如下：<br>devm_clk_get_optional—-&gt;devm_clk_get—-&gt;clk_get   </p>
+<pre><code>struct clk *clk_get(struct device *dev, const char *id)
+&#123;
+    struct clk *p, *clk = ERR_PTR(-ENOENT);
+
+    mutex_lock(&amp;clocks_mutex);
+    list_for_each_entry(p, &amp;clocks, node) &#123;
+        if (strcmp(id, p-&gt;name) == 0) &#123;
+            clk = p;
+            break;
+        &#125;
+    &#125;
+    mutex_unlock(&amp;clocks_mutex);
+
+    return clk;
+&#125;
+</code></pre>
+<p>获取refclk的时钟</p>
+<p><strong>4.clk_set_rate函数</strong><br>为clk指定一个新的速率，内核注释如下  </p>
+<pre><code>/**
+* clk_set_rate - specify a new rate for clk
+* @clk: the clk whose rate is being changed
+* @rate: the new rate for clk
+*
+* In the simplest case clk_set_rate will only adjust the rate of clk.
+*
+* Setting the CLK_SET_RATE_PARENT flag allows the rate change operation to
+* propagate up to clk&#39;s parent; whether or not this happens depends on the
+* outcome of clk&#39;s .round_rate implementation.  If *parent_rate is unchanged
+* after calling .round_rate then upstream parent propagation is ignored.  If
+* *parent_rate comes back with a new rate for clk&#39;s parent then we propagate
+* up to clk&#39;s parent and set its rate.  Upward propagation will continue
+* until either a clk does not support the CLK_SET_RATE_PARENT flag or
+* .round_rate stops requesting changes to clk&#39;s parent_rate.
+*
+* Rate changes are accomplished via tree traversal that also recalculates the
+* rates for the clocks and fires off POST_RATE_CHANGE notifiers.
+*
+* Returns 0 on success, -EERROR otherwise.
+</code></pre>
+<p><strong>4.of_get_property函数</strong><br>内核注释如下：  </p>
+<pre><code>/*
+* Find a property with a given name for a given node
+* and return the value.
+*/
+</code></pre>
+<p>从节点中寻找属性并返回属性的值<br><strong>5.of_get_named_gpio函数</strong><br>内核注释如下  </p>
+<pre><code>/**
+* of_get_named_gpio() - Get a GPIO number to use with GPIO API
+* @np:		device node to get GPIO from
+* @propname:	Name of property containing gpio specifier(s)
+* @index:	index of the GPIO
+*
+* Returns GPIO number to use with Linux generic GPIO API, or one of the errno
+* value on the error condition.
+*/
+</code></pre>
+<h2 id="设备树"><a href="#设备树" class="headerlink" title="设备树"></a>设备树</h2><p>3503a的驱动linux内核已经支持，所以主要是Datasheet的设置   </p>
+<pre><code>usbphy:usbphy@125B0000&#123;
+            #address-cells=&lt;1&gt;;
+            #size-cells=&lt;1&gt;;
+                compatible=&quot;samsung,exynos4x12-usb2phy&quot;;
+                reg=&lt;0x125B0000 0x100&gt;;
+                ranges;
+
+                clocks=&lt;&amp;clock 2&gt;,&lt;&amp;clock 305&gt;;
+                clock-names=&quot;xusbxti&quot;,&quot;otg&quot;;
+
+                usbphy-sys&#123;
+                        reg=&lt;0x10020704 0x8 0x1001021c 0x4&gt;;
+                &#125;;
+        &#125;;
+    ehci@12580000&#123;
+                status=&quot;okay&quot;;
+                usbphy=&lt;&amp;usbphy&gt;;
+    &#125;;
+    usb3503@08&#123;
+                compatible=&quot;smsc,usb3503&quot;;
+                reg=&lt;0x08 0x4&gt;;
+                connect-gpios=&lt;&amp;gpm3 3 1&gt;;
+                intn-gpios=&lt;&amp;gpx2 3 1&gt;;
+                reset-gpios=&lt;&amp;gpm2 4 1&gt;;
+                initial-mode=&lt;1&gt;;
+    &#125;;
+&#125;;
+</code></pre>
+<h3 id="usb驱动的设备树"><a href="#usb驱动的设备树" class="headerlink" title="usb驱动的设备树"></a>usb驱动的设备树</h3><h4 id="usbphy"><a href="#usbphy" class="headerlink" title="usbphy"></a>usbphy</h4><ul>
+<li><p>由Documentation&#x2F;devicetree&#x2F;bindings&#x2F;phy&#x2F;samsung-phy.txt  中 Samsung S5P&#x2F;EXYNOS SoC series USB PHY这一部分可以写出usbphy的设备节点<br>如下：  </p>
+<pre><code> /*usbphy:usbphy@125B0000&#123;
+      #address-cells=&lt;1&gt;;
+      #size-cells=&lt;1&gt;;
+          compatible=&quot;samsung,exynos4x12-usb2phy&quot;;
+          reg=&lt;0x125B0000 0x100&gt;;
+          ranges;
+
+          clocks=&lt;&amp;clock 2&gt;,&lt;&amp;clock 305&gt;;
+          clock-names=&quot;xusbxti&quot;,&quot;otg&quot;;
+
+          usbphy-sys&#123;
+                  reg=&lt;0x10020704 0x8 0x1001021c 0x4&gt;;
+          &#125;;
+  &#125;;
+</code></pre>
+<p>  内核文档注释如下：<br>      Samsung S5P&#x2F;EXYNOS SoC series USB PHY<br>  ————————————————-<br><br>  Required properties:<br>  - compatible : should be one of the listed compatibles:<br>      - “samsung,exynos3250-usb2-phy”<br>      - “samsung,exynos4210-usb2-phy”<br>      - “samsung,exynos4x12-usb2-phy”<br>      - “samsung,exynos5250-usb2-phy”<br>      - “samsung,s5pv210-usb2-phy”<br>  - reg : a list of registers used by phy driver &#x2F;&#x2F;这个寄存器地址在4412的Datesheet中<br>      - first and obligatory is the location of phy modules registers<br>  - samsung,sysreg-phandle - handle to syscon used to control the system registers<br>  - samsung,pmureg-phandle - handle to syscon used to control PMU registers<br>  - #phy-cells : from the generic phy bindings, must be 1;<br>  - clocks and clock-names:<br>      - the “phy” clock is required by the phy module, used as a gate<br>      - the “ref” clock is used to get the rate of the clock provided to the<br>      PHY module<br><br>  Optional properties:<br>  - vbus-supply: power-supply phandle for vbus power source<br><br>  The first phandle argument in the PHY specifier identifies the PHY, its<br>  meaning is compatible dependent. For the currently supported SoCs (Exynos 4210<br>  and Exynos 4212) it is as follows:<br>  0 - USB device (“device”),<br>  1 - USB host (“host”),<br>  2 - HSIC0 (“hsic0”),<br>  3 - HSIC1 (“hsic1”),<br>  Exynos3250 has only USB device phy available as phy 0.<br><br>  Exynos 4210 and Exynos 4212 use mode switching and require that mode switch<br>  register is supplied.<br>      For Exynos 4412 (compatible with Exynos 4212):<br><br>  usbphy: phy@125b0000 {<br>      compatible &#x3D; “samsung,exynos4x12-usb2-phy”;<br>      reg &#x3D; &lt;0x125b0000 0x100&gt;;<br>      clocks &#x3D; &lt;&amp;clock 305&gt;, &lt;&amp;clock 2&gt;;<br>      clock-names &#x3D; “phy”, “ref”;<br>      #phy-cells &#x3D; &lt;1&gt;;<br>      samsung,sysreg-phandle &#x3D; &lt;&amp;sys_reg&gt;;<br>      samsung,pmureg-phandle &#x3D; &lt;&amp;pmu_reg&gt;;<br>  };</p>
+</li>
+<li><p>搜索compatible属性找到驱动文件，路径如下drivers&#x2F;phy&#x2F;samsung&#x2F;phy-samsung-usb2.c  </p>
+</li>
+<li><p>clock-names&#x3D;”xusbxti”,”otg”;<br>  XUSBXTI：USB PHY模块使用，同时也用于系统PLL。在datasheet中如下描述</p>
+</li>
+</ul>
+<p><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/usb_phyclock144224.png?raw=true" alt="image">   </p>
+<ul>
+<li><p>下面这个属性没弄清楚如何在驱动中使用的</p>
+<pre><code>  usbphy-sys&#123;
+                          reg=&lt;0x10020704 0x8 0x1001021c 0x4&gt;;
+                  &#125;; 
+</code></pre>
+<p>  查datasheet 0x10020704 地址功能为USB PHY control register<br>  0x1001021c地址功能为 USB control register</p>
+</li>
+</ul>
+<h4 id="EHCI"><a href="#EHCI" class="headerlink" title="EHCI"></a>EHCI</h4><p>ECHI:EHCI：EHCI（Enhanced Host Controller Interface），是Intel 主导的USB2.0 的接口标准。EHCI 仅提供USB2.0 的高速功能，而依靠UHCI 或OHCI 来提供对全速（full- speed）或低速（low-speed）设备的支持。<br>ehci 在exynos4.dtsi中设置了，所以在这里只需要设置一下节点状态  </p>
+<h4 id="3503"><a href="#3503" class="headerlink" title="3503"></a>3503</h4><p>设备树如下  </p>
+<pre><code>usb3503@08&#123;
+            compatible=&quot;smsc,usb3503&quot;;
+            reg=&lt;0x08 0x4&gt;;
+            connect-gpios=&lt;&amp;gpm3 3 1&gt;;
+              intn-gpios=&lt;&amp;gpx2 3 1&gt;;
+            reset-gpios=&lt;&amp;gpm2 4 1&gt;;
+            initial-mode=&lt;1&gt;;
+   &#125;;
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/09/%E5%AD%97%E7%AC%A6%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/" rel="prev" title="字符设备驱动函数">
+                  <i class="fa fa-chevron-left"></i> 字符设备驱动函数
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赵博</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
