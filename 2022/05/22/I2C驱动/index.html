@@ -20,16 +20,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="title: I2C驱动categories: Linux内核驱动   I2C的硬件结构：I2C在硬件上是由两条数据线组成，一个是SCL 时钟线，一个是SDA 数据线，空闲的时候SCL 和SDA 要处于高电平，所以在硬件设计上这俩个线要加上拉电阻。I2C驱动结构：Linux 中定义了I2C 驱动的体系结构，即I2C 总线驱动和I2C 设备驱动还有I2C核心">
+    <meta name="description" content="title: I2C驱动categories: Linux内核驱动–I2C的硬件结构：I2C在硬件上是由两条数据线组成，一个是SCL 时钟线，一个是SDA 数据线，空闲的时候SCL 和SDA 要处于高电平，所以在硬件设计上这俩个线要加上拉电阻。I2C驱动结构：Linux 中定义了I2C 驱动的体系结构，即I2C 总线驱动和I2C 设备驱动还有I2C核心">
 <meta property="og:type" content="article">
 <meta property="og:title" content="嵌入式">
 <meta property="og:url" content="http://example.com/2022/05/22/I2C%E9%A9%B1%E5%8A%A8/index.html">
 <meta property="og:site_name" content="嵌入式">
-<meta property="og:description" content="title: I2C驱动categories: Linux内核驱动   I2C的硬件结构：I2C在硬件上是由两条数据线组成，一个是SCL 时钟线，一个是SDA 数据线，空闲的时候SCL 和SDA 要处于高电平，所以在硬件设计上这俩个线要加上拉电阻。I2C驱动结构：Linux 中定义了I2C 驱动的体系结构，即I2C 总线驱动和I2C 设备驱动还有I2C核心">
+<meta property="og:description" content="title: I2C驱动categories: Linux内核驱动–I2C的硬件结构：I2C在硬件上是由两条数据线组成，一个是SCL 时钟线，一个是SDA 数据线，空闲的时候SCL 和SDA 要处于高电平，所以在硬件设计上这俩个线要加上拉电阻。I2C驱动结构：Linux 中定义了I2C 驱动的体系结构，即I2C 总线驱动和I2C 设备驱动还有I2C核心">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/I2C%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F.png?raw=true">
 <meta property="article:published_time" content="2022-05-22T04:23:13.161Z">
-<meta property="article:modified_time" content="2022-05-22T04:23:13.189Z">
+<meta property="article:modified_time" content="2022-05-22T05:09:59.864Z">
 <meta property="article:author" content="赵博">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/I2C%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F.png?raw=true">
@@ -204,8 +204,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2022-05-22 12:23:13" itemprop="dateCreated datePublished" datetime="2022-05-22T12:23:13+08:00">2022-05-22</time>
+      <time title="创建时间：2022-05-22 12:23:13 / 修改时间：13:09:59" itemprop="dateCreated datePublished" datetime="2022-05-22T12:23:13+08:00">2022-05-22</time>
     </span>
 
   
@@ -219,9 +220,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <hr>
-<p>title: I2C驱动<br>categories: Linux内核驱动 </p>
-<hr>
-<p>I2C的硬件结构：I2C在硬件上是由两条数据线组成，一个是SCL 时钟线，一个是SDA 数据线，空闲的时候SCL 和SDA 要处于高电平，所以在硬件设计上这俩个线要加上拉电阻。<br>I2C驱动结构：Linux 中定义了I2C 驱动的体系结构，即I2C 总线驱动和I2C 设备驱动还有I2C核心</p>
+<p>title: I2C驱动<br>categories: Linux内核驱动<br>–<br>I2C的硬件结构：I2C在硬件上是由两条数据线组成，一个是SCL 时钟线，一个是SDA 数据线，空闲的时候SCL 和SDA 要处于高电平，所以在硬件设计上这俩个线要加上拉电阻。<br>I2C驱动结构：Linux 中定义了I2C 驱动的体系结构，即I2C 总线驱动和I2C 设备驱动还有I2C核心</p>
 <span id="more"></span>  
 
 
@@ -365,8 +364,8 @@ driver：要注销的 i2c_driver。
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/05/22/%E5%9D%97%E8%AE%BE%E5%A4%87/" rel="prev" title="">
-                  <i class="fa fa-chevron-left"></i> 
+                <a href="/2022/05/22/%E5%9D%97%E8%AE%BE%E5%A4%87/" rel="prev" title="块设备驱动">
+                  <i class="fa fa-chevron-left"></i> 块设备驱动
                 </a>
             </div>
             <div class="post-nav-item">
