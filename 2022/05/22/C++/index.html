@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="跟着侯捷老师复习一下C++，将笔记整理一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++">
+<meta property="og:url" content="http://example.com/2022/05/22/C++/index.html">
+<meta property="og:site_name" content="嵌入式">
+<meta property="og:description" content="跟着侯捷老师复习一下C++，将笔记整理一下">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-22T14:46:18.023Z">
+<meta property="article:modified_time" content="2022-05-22T14:46:18.043Z">
+<meta property="article:author" content="赵博">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/05/22/C++/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/05/22/C++/","path":"2022/05/22/C++/","title":"C++"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>C++ | 嵌入式</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">嵌入式</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录每一次成长</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">0</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">3</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">12</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6%E4%B8%8E%E7%B1%BB%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">头文件与类的声明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E5%B8%83%E5%B1%80"><span class="nav-number">1.0.1.</span> <span class="nav-text">头文件的布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="nav-number">1.0.2.</span> <span class="nav-text">类的声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%BC%95%E5%87%BA"><span class="nav-number">1.0.3.</span> <span class="nav-text">模板的引出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inline-%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0"><span class="nav-number">1.0.4.</span> <span class="nav-text">inline 内联函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E7%BA%A7%E5%88%AB"><span class="nav-number">1.0.5.</span> <span class="nav-text">访问级别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%E4%B8%8E%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">3.</span> <span class="nav-text">参数传递与返回值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%8A%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%94%BE%E5%88%B0private%E9%87%8C%E9%9D%A2"><span class="nav-number">3.0.1.</span> <span class="nav-text">把构造函数放到private里面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0-%EF%BC%88const%EF%BC%89"><span class="nav-number">3.0.2.</span> <span class="nav-text">常量成员函数 （const）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">3.0.3.</span> <span class="nav-text">参数传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#friend-%E5%8F%8B%E5%85%83"><span class="nav-number">3.0.4.</span> <span class="nav-text">friend(友元)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-number">4.</span> <span class="nav-text">操作符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0-this"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">成员函数 this</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD%EF%BC%88%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%EF%BC%89"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">操作符重载（类成员函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD-%EF%BC%88%E9%9D%9E%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%EF%BC%89"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">操作符重载 （非成员函数）</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">赵博</p>
+  <div class="site-description" itemprop="description">果淉菓</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/22/C++/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="赵博">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="嵌入式">
+      <meta itemprop="description" content="果淉菓">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="C++ | 嵌入式">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-22 22:46:18" itemprop="dateCreated datePublished" datetime="2022-05-22T22:46:18+08:00">2022-05-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>跟着侯捷老师复习一下C++，将笔记整理一下 </p>
+<span id="more"></span>  
+
+<h1 id="头文件与类的声明"><a href="#头文件与类的声明" class="headerlink" title="头文件与类的声明"></a>头文件与类的声明</h1><p>类的形式一般分为两种，一种使带指针的类，一种使不带指针的类；  </p>
+<h3 id="头文件的布局"><a href="#头文件的布局" class="headerlink" title="头文件的布局"></a>头文件的布局</h3><pre><code>#ifndef __COMPILE__
+#define __COMPILE__ 
+
+1. 前置声明  
+2. 类声明
+3. 类定义
+
+#endif  
+</code></pre>
+<h3 id="类的声明"><a href="#类的声明" class="headerlink" title="类的声明"></a>类的声明</h3><pre><code>class complex  //class head
+&#123;
+public:        //class body
+complex (double r = 0, double i = 0): re (r), im (i) &#123; &#125;
+complex&amp; operator += (const complex&amp;);
+complex&amp; operator -= (const complex&amp;);
+complex&amp; operator *= (const complex&amp;);
+complex&amp; operator /= (const complex&amp;);
+double real () const &#123; return re; &#125;
+double imag () const &#123; return im; &#125;
+private:
+double re, im;
+
+friend complex&amp; __doapl (complex *, const complex&amp;);
+friend complex&amp; __doami (complex *, const complex&amp;);
+friend complex&amp; __doaml (complex *, const complex&amp;);
+&#125;;
+</code></pre>
+<h3 id="模板的引出"><a href="#模板的引出" class="headerlink" title="模板的引出"></a>模板的引出</h3><p>对于复数来说，有整数型的实部虚部，还有浮点型的实部虚部。上面声明的是浮点数的类，所以为了适用所有的数据类型，引出了模板的使用。 </p>
+<pre><code>template&lt;typename T&gt;
+class compile
+&#123;
+    public:
+    ...
+    private:
+    T re,im;
+    ...
+&#125;
+</code></pre>
+<p>模板的使用如下：</p>
+<pre><code>&#123;
+    complex&lt;double&gt; c1(2.5,1.5);
+    complex&lt;int&gt;    c2(2,6);
+    ...
+&#125;  
+</code></pre>
+<h3 id="inline-内联函数"><a href="#inline-内联函数" class="headerlink" title="inline 内联函数"></a>inline 内联函数</h3><p>函数若在class body内定义完成，便会自动形成inline函数，如果在class外定义就不是inline函数 </p>
+<h3 id="访问级别"><a href="#访问级别" class="headerlink" title="访问级别"></a>访问级别</h3><pre><code>public:使外界能够使用的函数以及数据
+private:数据部分应该封装起来，不被外界使用调用
+</code></pre>
+<h1 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h1><p>创建一个对象时自动运行的函数</p>
+<ul>
+<li><p>构造函数的目的：创建一个对象</p>
+</li>
+<li><p>构造函数的名字要跟类的名称相同 </p>
+</li>
+<li><p>可以拥有默认参数  </p>
+</li>
+<li><p>没有返回值类型 </p>
+</li>
+<li><p>构造函数特有的语法<br>  初始化初值列 冒号：</p>
+<pre><code>  complex (double r = 0, double i = 0): re (r), im (i) &#123; &#125;
+</code></pre>
+<p>  相当于：  </p>
+<pre><code> complex (double r = 0, double i = 0) &#123;
+       re (r), im (i)
+   &#125;
+</code></pre>
+</li>
+<li><p>构造函数可以有多个 -重载overloading，但是以下情况是冲突的  </p>
+<pre><code>  complex (double r = 0, double i = 0): re (r), im (i) &#123; &#125;
+  complex(): re (r), im (i) &#123; &#125; 
+</code></pre>
+<p>  因为在下面两种创建对象的情况  </p>
+<pre><code>  complex c1;
+  complex c2();
+</code></pre>
+</li>
+</ul>
+<h1 id="参数传递与返回值"><a href="#参数传递与返回值" class="headerlink" title="参数传递与返回值"></a>参数传递与返回值</h1><h3 id="把构造函数放到private里面"><a href="#把构造函数放到private里面" class="headerlink" title="把构造函数放到private里面"></a>把构造函数放到private里面</h3><p>这样操作的作用：不允许外界创建对象；比如单例模式  </p>
+<h3 id="常量成员函数-（const）"><a href="#常量成员函数-（const）" class="headerlink" title="常量成员函数 （const）"></a>常量成员函数 （const）</h3><p>在函数后面加const ,如下所示：  </p>
+<pre><code>double real () const &#123; return re; &#125;
+double imag () const &#123; return im; &#125;
+</code></pre>
+<p>class 类里面分为会改变数据的和不会改变数据的函数，只要是不会改变数据的直接加上const，比如上面的函数，只是为了返回re的值，不会去改变re的值，所以加上了const<br>创建一个对象如下</p>
+<pre><code>complex c1(2,1);
+cout &lt;&lt; c1.real();
+</code></pre>
+<p>但是如果没有加const，下面这种情况编译就会出现问题  </p>
+<pre><code>const complex c1(2,1);
+cout &lt;&lt; c1.real();
+</code></pre>
+<p>创建对象的时候声明 c1的参数是不可以改变的，但是在complex类中如果没有加const就说明 re是可以修改的。所以编译的时候就会报错  </p>
+<h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><ul>
+<li>pass by value:传递所有数据  </li>
+<li>pass by reference(引用):在底层就相当于传递指针 “&amp;”。这种速度比较快<br>（尽量传引用）</li>
+<li>return by value :返回数据</li>
+<li>return by reference: 在可以的情况下尽量用引用的方式返回<br>  什么情况下不可以 return by reference<br>  在函数结束后，变量被释放，这种情况下不可以将此变量的引用传递出去，除了这种情况，其他情况都可以返回引用。</li>
+</ul>
+<h3 id="friend-友元"><a href="#friend-友元" class="headerlink" title="friend(友元)"></a>friend(友元)</h3><p>在下面的类中，友元起的作用： </p>
+<pre><code>   class complex  //class head
+&#123;
+public:        //class body
+complex (double r = 0, double i = 0): re (r), im (i) &#123; &#125;
+complex&amp; operator += (const complex&amp;);
+complex&amp; operator -= (const complex&amp;);
+complex&amp; operator *= (const complex&amp;);
+complex&amp; operator /= (const complex&amp;);
+double real () const &#123; return re; &#125;
+double imag () const &#123; return im; &#125;
+private:
+double re, im;
+
+friend complex&amp; __doapl (complex *, const complex&amp;);
+friend complex&amp; __doami (complex *, const complex&amp;);
+friend complex&amp; __doaml (complex *, const complex&amp;);
+&#125;;
+</code></pre>
+<p>友元可以自由取得friend的private成员  </p>
+<ul>
+<li><p>相同class的各个对象互为友元如下：</p>
+<pre><code>class complex
+  &#123;
+      public:
+      complex (double r = 0, double i = 0): re (r), im (i) &#123; &#125;
+      int func(const complex&amp; param)&#123;
+      return param.re;    
+      &#125;
+
+  private:
+  double re,im;    
+  &#125;
+  complex c1(2,1);
+  complex c2;
+  c2.func(c1);
+</code></pre>
+</li>
+</ul>
+<h1 id="操作符重载"><a href="#操作符重载" class="headerlink" title="操作符重载"></a>操作符重载</h1><p>在c++中操作符就是一种函数。</p>
+<h4 id="成员函数-this"><a href="#成员函数-this" class="headerlink" title="成员函数 this"></a>成员函数 this</h4><p>所有的成员函数都带有this指针，指向成员函数属于的对象  </p>
+<h4 id="操作符重载（类成员函数）"><a href="#操作符重载（类成员函数）" class="headerlink" title="操作符重载（类成员函数）"></a>操作符重载（类成员函数）</h4><p>两个操作数的 例如“+&#x3D;”  </p>
+<ul>
+<li><p>规则： 左边的是调用者，右边是被调用者，如下</p>
+<pre><code>  inline complex&amp;
+      __doapl (complex* ths, const complex&amp; r)
+      &#123;
+      ths-&gt;re += r.re;
+      ths-&gt;im += r.im;
+      return *ths;
+      &#125;
+  inline complex&amp;
+      complex::operator += (const complex&amp; r)
+      &#123;
+      return __doapl (this, r);
+      &#125;
+  
+  complex c1;
+  complex c2;
+  c2 += c1 //c2 = c2 + c1;
+</code></pre>
+</li>
+</ul>
+<p>如上：this 指的是c2（左值），r指的是c1  </p>
+<ul>
+<li><p>传送者无需知道接收者是以reference形式接受，比如  </p>
+<p>  c2 +&#x3D; c1<br>  在下面重载函数中 c1对应的重载函数中的形参，但是形参的类型是reference，c1是一个value。这就是所说的传送者无需接收者是以reference形式接受。<br>  还有一种情况是函数返回值无需知道函数返回类型是reference。如下  </p>
+<pre><code>  inline complex&amp;
+          __doapl (complex* ths, const complex&amp; r)
+          &#123;
+          ths-&gt;re += r.re;
+          ths-&gt;im += r.im;
+          return *ths;
+          &#125;
+</code></pre>
+</li>
+</ul>
+<h4 id="操作符重载-（非成员函数）"><a href="#操作符重载-（非成员函数）" class="headerlink" title="操作符重载 （非成员函数）"></a>操作符重载 （非成员函数）</h4><pre><code>inline complex
+operator + (const complex&amp; x, const complex&amp; y)
+&#123;
+return complex (real (x) + real (y), imag (x) + imag (y));
+&#125;
+
+inline complex
+operator + (const complex&amp; x, double y)
+&#123; 
+return complex (real (x) + y, imag (x));
+&#125;
+
+inline complex
+operator + (double x, const complex&amp; y)
+&#123;
+return complex (x + real (y), imag (y));
+&#125;
+</code></pre>
+<ul>
+<li>以上的函数不可return by reference; 返回一个对象，对象在函数执行完毕之后分配的临时空间被释放。</li>
+<li>typename + ():创建临时对象。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/22/%E3%80%8APython%E7%BC%96%E7%A8%8B%20%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="prev" title="《Python编程 从入门到实践》读书笔记">
+                  <i class="fa fa-chevron-left"></i> 《Python编程 从入门到实践》读书笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赵博</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
