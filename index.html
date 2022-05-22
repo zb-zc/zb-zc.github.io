@@ -83,7 +83,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">0</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">1</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">11</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">0</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">11</span></a></li>
   </ul>
 </nav>
 
@@ -132,7 +132,7 @@
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
@@ -200,7 +200,16 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-05-22 13:33:32 / 修改时间：13:33:33" itemprop="dateCreated datePublished" datetime="2022-05-22T13:33:32+08:00">2022-05-22</time>
+      <time title="创建时间：2022-05-22 13:33:32 / 修改时间：13:38:03" itemprop="dateCreated datePublished" datetime="2022-05-22T13:33:32+08:00">2022-05-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+        </span>
     </span>
 
   
@@ -213,202 +222,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <span id="more"></span> 
-
-<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><p>用引号括起来的都是字符串，其中引号可以是单引号，也可以是双引号   </p>
-<pre><code>&quot;This is a string.&quot;  
-&#39;This is also a string.&#39;  
-</code></pre>
-<h3 id="在字符中使用变量"><a href="#在字符中使用变量" class="headerlink" title="在字符中使用变量"></a>在字符中使用变量</h3><p>要在字符串中插入变量的值，可在前引号前加上字母f，再将要插入的变量放在花括号内。  </p>
-<pre><code>first_name = &quot;ada&quot;
-last_name = &quot;lovelace&quot;
-❶ full_name = f&quot;&#123;first_name&#125; &#123;last_name&#125;&quot;
-print(full_name)  
-</code></pre>
-<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>在python中用[]表示列表，并用逗号分隔开其中的的元素  </p>
-<pre><code>bicycles = [&#39;trek&#39;, &#39;cannondale&#39;, &#39;redline&#39;, &#39;specialized&#39;]
-print(bicycles)
-</code></pre>
-<h4 id="访问列表元素"><a href="#访问列表元素" class="headerlink" title="访问列表元素"></a>访问列表元素</h4><p>只需将该元素的位置（索引） 告诉Python即可  </p>
-<pre><code>bicycles = [&#39;trek&#39;, &#39;cannondale&#39;, &#39;redline&#39;, &#39;specialized&#39;]
-print(bicycles[0])  
-</code></pre>
-<h4 id="修改元素"><a href="#修改元素" class="headerlink" title="修改元素"></a>修改元素</h4><pre><code>motorcycles = [&#39;honda&#39;, &#39;yamaha&#39;, &#39;suzuki&#39;]
-print(motorcycles)
-❷ motorcycles[0] = &#39;ducati&#39;
-print(motorcycles)
-</code></pre>
-<h4 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h4><ul>
-<li><p><strong>在列表末尾添加元素</strong>    </p>
-<pre><code>  motorcycles = [&#39;honda&#39;, &#39;yamaha&#39;, &#39;suzuki&#39;]
-  print(motorcycles)
-  ❶ motorcycles.append(&#39;ducati&#39;)
-  print(motorcycles)
-</code></pre>
-</li>
-</ul>
-<p> 方法append()将元素’ducati’添加到列表末尾（见❶） ， 而不影<br>响列表中的其他所有元素</p>
-<ul>
-<li><p><strong>在列表中插入元素</strong><br>使用方法insert()可在列表的任何位置添加新元素。为此，你需要指定新元素的索引和值  </p>
-<pre><code>  motorcycles = [&#39;honda&#39;, &#39;yamaha&#39;, &#39;suzuki&#39;]
-  ❶ motorcycles.insert(0, &#39;ducati&#39;)
-  print(motorcycles)
-</code></pre>
-</li>
-</ul>
-<h4 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h4><ul>
-<li><p><strong>使用del语句删除元素</strong><br>如果知道要删除的元素在列表中的位置， 可使用del语句  </p>
-<pre><code>  motorcycles = [&#39;honda&#39;, &#39;yamaha&#39;, &#39;suzuki&#39;]
-  print(motorcycles)
-  ❶ del motorcycles[0]
-  print(motorcycles)
-</code></pre>
-</li>
-<li><p><strong>使用pop()删除元素</strong><br>有时候， 你要将元素从列表中删除，并接着使用它的值。方法pop()删除列表末尾的元素，并让你能够接着使用它。   </p>
-<pre><code>   motorcycles = [&#39;honda&#39;, &#39;yamaha&#39;, &#39;suzuki&#39;]
-  print(motorcycles)
-  ❷ popped_motorcycle = motorcycles.pop()
-  ❸ print(motorcycles)
-  ❹ print(popped_motorcycle)
-</code></pre>
-</li>
-<li><p><strong>删除列表中任何位置的元素</strong><br>实际上， 可以使用pop()来删除列表中任意位置的元素，只需在圆括号中指定要删除元素的索引即可。  </p>
-<pre><code>  motorcycles = [&#39;honda&#39;, &#39;yamaha&#39;, &#39;suzuki&#39;]
-  ❶ first_owned = motorcycles.pop(0)
-  ❷ print(f&quot;The first motorcycle I owned was a &#123;first_owned.title()&#125;.&quot;)
-  
-</code></pre>
-</li>
-<li><p><strong>根据值删除元素</strong><br>  如果只知道要删除的元素的值， 可使用方法remove()。</p>
-<pre><code>  motorcycles = [&#39;honda&#39;, &#39;yamaha&#39;, &#39;suzuki&#39;, &#39;ducati&#39;]
-  print(motorcycles)
-  ❶ motorcycles.remove(&#39;ducati&#39;)
-  print(motorcycles)
-</code></pre>
-</li>
-</ul>
-<p><strong>使用remove()从列表中删除元素时，也可接着使用它的值。方法remove()只删除第一个指定的值。如果要删除的值可能在列表中出现多次，就需要使用循环来确保将每个值都删除。 这将在第7章中介绍</strong>   </p>
-<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><h3 id="使用字典"><a href="#使用字典" class="headerlink" title="使用字典"></a>使用字典</h3><p>在Python中，字典是一系列<strong>键值对</strong>，每个键都与一个值对应。通过键来访问相关联的值。字典用放在{}中的一系列键值对表示。键值对之间用<strong>逗号</strong>隔开</p>
-<pre><code>alien_o = &#123;&#39;color&#39;: &#39;green&#39;,&#39;points&#39;: 5&#125;  ①
-print(alien_o[&#39;color&#39;]) ②
-//
-①中空格可有可无
-②访问字典中的值
-// 
-</code></pre>
-<h4 id="添加键值对"><a href="#添加键值对" class="headerlink" title="添加键值对"></a>添加键值对</h4><p>要添加键值对， 可依次指定字典名、 用方括号括起的键和相关联的值。  </p>
-<pre><code>alien_0 = &#123;&#39;color&#39;: &#39;green&#39;, &#39;points&#39;: 5&#125;
-print(alien_0)
-❶ alien_0[&#39;x_position&#39;] = 0
-</code></pre>
-<h4 id="创建一个空字典"><a href="#创建一个空字典" class="headerlink" title="创建一个空字典"></a>创建一个空字典</h4><pre><code>alien_0 = &#123;&#125;
-alien_0 = &#123;&#39;color&#39;: &#39;green&#39;&#125;
-</code></pre>
-<h4 id="修改字典中的值"><a href="#修改字典中的值" class="headerlink" title="修改字典中的值"></a>修改字典中的值</h4><p>要修改字典中的值， 可依次指定字典名、 用方括号括起的键， 以及与该键相关联的新值。 </p>
-<pre><code>alien_0 = &#123;&#39;color&#39;: &#39;green&#39;&#125;
-</code></pre>
-<p><em>注意</em>：添加键值对使用[],修改键值对是{}。</p>
-<h4 id="删除键值对"><a href="#删除键值对" class="headerlink" title="删除键值对"></a>删除键值对</h4><p>del语句：使用del语句时，必须指定字典名和要删除的键  </p>
-<pre><code>alien_0 = &#123;&#39;color&#39;: &#39;green&#39;, &#39;points&#39;: 5&#125;
-print(alien_0)
-❶ del alien_0[&#39;points&#39;]
-print(alien_0)
-</code></pre>
-<h4 id="由类似对象组成的字典"><a href="#由类似对象组成的字典" class="headerlink" title="由类似对象组成的字典"></a>由类似对象组成的字典</h4><p>字典存储的是一个对象（游戏中的一个外星人） 的多种信息， 可以使用字典来存储众多对象的同一种信息  </p>
-<pre><code>favorite_languages = &#123;
-&#39;jen&#39;: &#39;python&#39;,
-&#39;sarah&#39;: &#39;c&#39;,
-&#39;edward&#39;: &#39;ruby&#39;,
-&#39;phil&#39;: &#39;python&#39;,
-&#125;
-</code></pre>
-<p>确定需要使用多行来定义字典时， 要在输入左花括号后按回车键。 在下一行缩进四个空格，指定第一个键值对，并在它后面加上一个逗号。此后再按回车键时， 文本编辑器将自动缩进后续键值对，且缩进量与第一个键值对相同。定义好字典后，在最后一个键值对的下一行添加一个右花括号， 并缩进四个空格， 使其与字典中的键对齐。</p>
-<h4 id="使用get-来访问值"><a href="#使用get-来访问值" class="headerlink" title="使用get()来访问值"></a>使用get()来访问值</h4><pre><code>alien_0 = &#123;&#39;color&#39;: &#39;green&#39;, &#39;speed&#39;: &#39;slow&#39;&#125;
-point_value = alien_0.get(&#39;points&#39;, &#39;No point value assigned.&#39;)
-print(point_value)
-</code></pre>
-<p>方法get()的第一个参数用于指定键， 是必不可少的； 第二个参数为指<br>定的键不存在时要返回的值， 是可选的：</p>
-<h3 id="遍历字典"><a href="#遍历字典" class="headerlink" title="遍历字典"></a>遍历字典</h3><p><em><strong>For循环</strong></em></p>
-<pre><code>user_0 = &#123;
-&#39;username&#39;: &#39;efermi&#39;,
-&#39;first&#39;: &#39;enrico&#39;,
-&#39;last&#39;: &#39;fermi&#39;,
-&#125;
-❶ for key, value in user_0.items():
-❷ print(f&quot;\nKey: &#123;key&#125;&quot;)
-❸ print(f&quot;Value: &#123;value&#125;&quot;)
-</code></pre>
-<p><strong>如</strong>❶<strong>所示， 要编写遍历字典的for循环， 可声明两个变量， 用于存储键值对中的键和值</strong><br><strong>for语句的第二部分包含字典名和方法items()<strong>（见❶）</strong>， 它返回一个<br>键值对列表。接下来，for循环依次将每个键值对赋给指定的两个变量。</strong>   </p>
-<h4 id="遍历字典中的所有键"><a href="#遍历字典中的所有键" class="headerlink" title="遍历字典中的所有键"></a>遍历字典中的所有键</h4><p>在不需要使用字典中的值时， 方法**keys()**很有用。  </p>
-<pre><code>for name in favorite_languages.keys():
-</code></pre>
-<h2 id="用户输入"><a href="#用户输入" class="headerlink" title="用户输入"></a>用户输入</h2><p>函数input()让程序暂停运行， 等待用户输入一些文本。 获取用户输入<br>后， Python将其赋给一个变量， 以方便你使用  </p>
-<pre><code>message = input(&quot;Tell me something, and I will repeat it back to you: &quot;)
-print(message)
-</code></pre>
-<ul>
-<li><pre><code>  prompt = &quot;If you tell us who you are, we can personalize the messages you see.&quot;
-  prompt += &quot;\nWhat is your first name? &quot;
-  name = input(prompt)
-  print(f&quot;\nHello, &#123;name&#125;!&quot;)
-</code></pre>
-</li>
-<li><pre><code>  If you tell us who you are, we can personalize the messages you see.
-  What is your first name? Eric
-  Hello, Eric!
-</code></pre>
-</li>
-</ul>
-<h4 id="使用Int-来获取数值输入"><a href="#使用Int-来获取数值输入" class="headerlink" title="使用Int()来获取数值输入"></a>使用Int()来获取数值输入</h4><p>使用函数input()时， Python将用户输入解读为字符串。函<br>数int()将数的字符串表示转换为数值表示。如下  </p>
-<pre><code>&gt;&gt;&gt; age = input(&quot;How old are you? &quot;)
-How old are you? 21
-❶ &gt;&gt;&gt; age = int(age)
-&gt;&gt;&gt; age &gt;= 18
-True
-</code></pre>
-<h4 id="求模运算符"><a href="#求模运算符" class="headerlink" title="求模运算符"></a>求模运算符</h4><p>它将两个数相除并返回余数。求模运算符不会指出一个数是另一个数的多少倍， 只指出余数是多少。  </p>
-<h2 id="While循环"><a href="#While循环" class="headerlink" title="While循环"></a>While循环</h2><p>for循环用于针对集合中的每个元素都执行一个代码块， 而while循环<br>则不断运行， 直到指定的条件<strong>不满足</strong>为止  </p>
-<pre><code>current_number = 1
-while current_number &lt;= 5:
-print(current_number)
-current_number += 1
-</code></pre>
-<h4 id="让用户选择何时退出"><a href="#让用户选择何时退出" class="headerlink" title="让用户选择何时退出"></a>让用户选择何时退出</h4><pre><code>❶ prompt = &quot;\nTell me something, and I will repeat it back to you:&quot;
-prompt += &quot;\nEnter &#39;quit&#39; to end the program. &quot;
-❷ message = &quot;&quot;
-❸ while message != &#39;quit&#39;:
-message = input(prompt)
-print(message)  
-</code></pre>
-<h4 id="使用break退出循环"><a href="#使用break退出循环" class="headerlink" title="使用break退出循环"></a>使用break退出循环</h4><p>要立即退出while循环， 不再运行循环中余下的代码， 也不管条件测试<br>的结果如何， 可使用break语句。  </p>
-<pre><code>prompt = &quot;\nPlease enter the name of a city you have visited:&quot;
-prompt += &quot;\n(Enter &#39;quit&#39; when you are finished.) &quot;
-❶ while True:
-    city = input(prompt)
-    if city == &#39;quit&#39;:
-        break
-    else:
-        print(f&quot;I&#39;d love to go to &#123;city.title()&#125;!&quot;)  
+          <p>学习了Python的基本语法</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/22/%E3%80%8APython%E7%BC%96%E7%A8%8B%20%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
         
-</code></pre>
-<h4 id="在循环中使用continue"><a href="#在循环中使用continue" class="headerlink" title="在循环中使用continue"></a>在循环中使用continue</h4><p>要返回循环开头， 并根据条件测试结果决定是否继续执行循环， 可使<br>用continue语句， 它不像break语句那样不再执行余下的代码并退出整<br>个循环。 例如， 来看一个从1数到10但只打印其中奇数的循环：  </p>
-<pre><code>current_number = 0
-while current_number &lt; 10:
-❶ current_number += 1
-if current_number % 2 == 0:
-continue
-print(current_number)
-
-首先将current_number设置为0， 由于它小于10， Python进入while循
-环。 进入循环后， 以步长1的方式往上数（见❶） ， 因
-此current_number为1。 接下来， if语句检查current_number与2的
-求模运算结果。 如果结果为0（意味着current_number可被2整除） ，
-就执行continue语句， 让Python忽略余下的代码， 并返回循环的开
-头。 如果当前的数不能被2整除， 就执行循环中余下的代码， 将这个数
-打印出来：
-</code></pre>
-<h4 id="使用while循环处理列表和字典"><a href="#使用while循环处理列表和字典" class="headerlink" title="使用while循环处理列表和字典"></a>使用while循环处理列表和字典</h4><h4 id="删除为特定值的所有列表元素"><a href="#删除为特定值的所有列表元素" class="headerlink" title="删除为特定值的所有列表元素"></a>删除为特定值的所有列表元素</h4><p>假设你有一个宠物列表， 其中包含多个值为’cat’的元素。 要删除所有<br>这些元素， 可不断运行一个while循环， 直到列表中不再包含<br>值’cat’， 如下所示g’v</p>
-
       
     </div>
 
@@ -464,7 +286,16 @@ print(current_number)
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-05-22 13:28:35 / 修改时间：13:33:01" itemprop="dateCreated datePublished" datetime="2022-05-22T13:28:35+08:00">2022-05-22</time>
+      <time title="创建时间：2022-05-22 13:28:35 / 修改时间：13:39:23" itemprop="dateCreated datePublished" datetime="2022-05-22T13:28:35+08:00">2022-05-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux%E5%86%85%E6%A0%B8%E9%A9%B1%E5%8A%A8/" itemprop="url" rel="index"><span itemprop="name">Linux内核驱动</span></a>
+        </span>
     </span>
 
   
@@ -477,337 +308,15 @@ print(current_number)
     
     
     <div class="post-body" itemprop="articleBody">
-          <span id="more"></span> 
-<h1 id="Makefile-的基本语法"><a href="#Makefile-的基本语法" class="headerlink" title="Makefile 的基本语法"></a>Makefile 的基本语法</h1><p>指定交叉编译的库以及头文件的方法  </p>
-<h4 id="Makefile的规则"><a href="#Makefile的规则" class="headerlink" title="Makefile的规则"></a>Makefile的规则</h4><pre><code>target ... : prerequisites ...
-command
-target ... : prerequisites ...
-command
-target ... : prerequisites ...
-command
-...
-...  
-</code></pre>
-<h4 id="Makefile中使用变量"><a href="#Makefile中使用变量" class="headerlink" title="Makefile中使用变量"></a>Makefile中使用变量</h4><p>将Makefile中的变量理解成C语言宏,调用这个变量的方法为  “$(变量名)”<br><strong>Demo</strong>  </p>
-<pre><code>edit : main.o kbd.o command.o display.o /
-insert.o search.o files.o utils.o
-cc -o edit main.o kbd.o command.o display.o /
-insert.o search.o files.o utils.o
-main.o : main.c defs.h
-cc -c main.c
-kbd.o : kbd.c defs.h command.h
-cc -c kbd.c
-command.o : command.c defs.h command.h
-cc -c command.c
-display.o : display.c defs.h buffer.h
-cc -c display.c
-insert.o : insert.c defs.h buffer.h
-cc -c insert.c
-search.o : search.c defs.h buffer.h
-cc -c search.c
-files.o : files.c defs.h buffer.h command.h
-cc -c files.c
-utils.o : utils.c defs.h
-cc -c utils.c
-clean :
-rm edit main.o kbd.o command.o display.o /
-insert.o search.o files.o utils.o  
-</code></pre>
-<p><strong>使用变量之后</strong>  </p>
-<pre><code>objects = main.o kbd.o command.o display.o /
-insert.o search.o files.o utils.o
-edit : $(objects) //在这里使用了变量
-cc -o edit $(objects)
-main.o : main.c defs.h
-cc -c main.c
-kbd.o : kbd.c defs.h command.h
-cc -c kbd.c
-command.o : command.c defs.h command.h
-cc -c command.c
-display.o : display.c defs.h buffer.h
-cc -c display.c
-insert.o : insert.c defs.h buffer.h
-cc -c insert.c
-search.o : search.c defs.h buffer.h
-cc -c search.c
-files.o : files.c defs.h buffer.h command.h
-cc -c files.c
-utils.o : utils.c defs.h
-cc -c utils.c
-clean :
-rm edit $(objects)  
-</code></pre>
-<h4 id="让Makefile主动推导"><a href="#让Makefile主动推导" class="headerlink" title="让Makefile主动推导"></a>让Makefile主动推导</h4><p>仅仅要make看到一个[.o]文件，它就会自己主动的把[.c]文件加在依赖关系中，假设make找到一个whatever.o，那么whatever.c，就会是whatever.o的依赖文件。而且 cc -c whatever.c 也会被推导出来，于是，我们的makefile再也不用写得这么复杂。  </p>
-<pre><code>objects = main.o kbd.o command.o display.o /
-          insert.o search.o files.o utils.o
-
-edit : $(objects)
-        cc -o edit $(objects)
-
-main.o : defs.h
-kbd.o : defs.h command.h
-command.o : defs.h command.h
-display.o : defs.h buffer.h
-insert.o : defs.h buffer.h
-search.o : defs.h buffer.h
-files.o : defs.h buffer.h command.h
-utils.o : defs.h
-
-.PHONY : clean
-clean :
-        rm edit $(objects)  
+          <p>学习记录一下Makefile的基本语法规则</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/22/Makefile%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
         
-</code></pre>
-<h4 id="清空目标文件夹"><a href="#清空目标文件夹" class="headerlink" title="清空目标文件夹"></a>清空目标文件夹</h4><p>make clean  </p>
-<pre><code>clean:
-        rm edit $(objects)  
-</code></pre>
-<p>更好的方法是  </p>
-<pre><code>.PHONY : clean
-    clean :
-            -rm edit $(objects)  
-</code></pre>
-<p>.PHONY意思表示clean是一个“伪目标”，。而在rm命令前面加了一个小减号的意思就是，也许某些文件出现问题，但不要管，继续做后面的事。当然，clean的规则不要放在文件的开头，不然，这就会变成make的默认目标，相信谁也不愿意这样。不成文的规矩是——“clean从来都是放在文件的最后”。</p>
-<h1 id="Makefile的高级操作"><a href="#Makefile的高级操作" class="headerlink" title="Makefile的高级操作"></a>Makefile的高级操作</h1><h4 id="引用其他的Makefile"><a href="#引用其他的Makefile" class="headerlink" title="引用其他的Makefile"></a>引用其他的Makefile</h4><p>在Makefile使用include关键字可以把别的Makefile包含进来  语法是  </p>
-<pre><code>include &lt;filename&gt;  //filename可以是当前操作系统Shell的文件模式（可以保含路径和通配符）  
-在include前面可以有一些空字符，但是绝不能是[Tab]键开始。include和&lt;filename&gt;可以用一个或多个空格隔开 
-make命令开始时，会把找寻include所指出的其它Makefile，并把其内容安置在当前的位置  
-</code></pre>
-<h1 id="书写规则"><a href="#书写规则" class="headerlink" title="书写规则"></a>书写规则</h1><p>第一条规则中的目标将被确立为最终的目标。如果第一条规则中的目标有很多个，那么，第一个目标会成为最终的目标。make所完成的也就是这个目标   </p>
-<h4 id="规则的语法"><a href="#规则的语法" class="headerlink" title="规则的语法"></a>规则的语法</h4><pre><code>targets : prerequisites
-    command
-    ...  
-</code></pre>
-<p>targets是文件名，以空格分开，可以使用通配符。一般来说，我们的目标基本上是一个文件，但也有可能是多个文件。command 是命令行  </p>
-<h4 id="在规则中使用通配符"><a href="#在规则中使用通配符" class="headerlink" title="在规则中使用通配符"></a>在规则中使用通配符</h4><p>make支持三个通配符  “*” “？” “[…]”    </p>
-<h4 id="文件搜寻"><a href="#文件搜寻" class="headerlink" title="文件搜寻"></a>文件搜寻</h4><p><strong>当make需要去找寻文件的依赖关系时，你可以在文件前加上路径，但最好的方法是把一个路径告诉make，让make在自动去找。</strong>  </p>
-<ol>
-<li><p>Makefile文件中的特殊变量<strong>“VPATH”</strong>就是完成这个功能的，如果没有指明这个变量，make只会在当前的目录中去找寻依赖文件和目标文件。如果定义了这个 <strong>变量</strong>，那么，make就会在当当前目录找不到的情况下，到所指定的目录中去找寻文件了。<br>例如 </p>
-<pre><code> VPATH = src:../headers  
- 上面的的定义指定两个目录，“src”和“../headers”，make会按照这个顺序进行搜索。目录由“冒号”分隔。当前目录优先级最高  
-</code></pre>
-</li>
-<li><p>“vpath” 关键字<br> 它更为灵活。它可以指定不同的文件在不同的搜索目录中。这是一个很灵活的功能。它的使用方法有三种</p>
-<ul>
-<li><pre><code>vpath &lt;pattern&gt; &lt;directories&gt;
-</code></pre>
-</li>
-</ul>
-<p> 为符合模式<pattern>的文件指定搜索目录<directories><br> *<br>         vpath <pattern></p>
-<p> 清除符合模式<pattern>的文件的搜索目录。  </p>
-<ul>
-<li>vpath</li>
-</ul>
-<p> 清除所有已被设置好了的文件搜索目录。</p>
-</li>
-</ol>
-<p>vapth使用方法中的<pattern>需要包含“%”字符。“%”的意思是匹配零或若干字符，例如，“%.h”表示所有以“.h”结尾的文件。<pattern>指定了要搜索的文件集，而<directories>则指定了<pattern>的文件集的搜索的目录。例如   </p>
-<pre><code> vpath %.h ../headers  //要求make在“../headers”目录下搜索所有以“.h”结尾的文件（如果文件没有在当前文件目录下被找到） 
-</code></pre>
-<h4 id="伪目标"><a href="#伪目标" class="headerlink" title="伪目标"></a>伪目标</h4><p>“伪目标”并不是一个文件，只是一个标签，由于“伪目标”不是文件，所以make无法生成它的依赖关系和决定它是否要执行。我们只有通过显示地指明这个“目标”才能让其生效。<strong>“.PHONY”来显示地指明一个目标是“伪目标”</strong>  </p>
-<pre><code>.PHONY: clean
-clean:
-        rm *.o temp
-</code></pre>
-<h4 id="Makefile的多目标"><a href="#Makefile的多目标" class="headerlink" title="Makefile的多目标"></a>Makefile的多目标</h4><p>Makefile的规则中的目标可以不止一个，其支持多目标，有可能我们的多个目标同时依赖于一个文件，并且其生成的命令大体类似。于是我们就能把其合并起来。<br>例如  </p>
-<pre><code>bigoutput littleoutput : text.g
-        generate text.g -$(subst output,,$@) &gt; $@  
-</code></pre>
-<p>上述规则等价于：   </p>
-<pre><code>    bigoutput : text.g
-        generate text.g -big &gt; bigoutput
-    littleoutput : text.g
-        generate text.g -little &gt; littleoutput
-</code></pre>
-<p><strong>注意上述使用了一个自动化变量</strong> “$@”<br>-$(subst output,,$@) 这是一个函数  </p>
-<h4 id="静态模式"><a href="#静态模式" class="headerlink" title="静态模式"></a>静态模式</h4><p>静态模式可以更加容易地定义多目标的规则，可以让我们的规则变得更加的有弹性和灵活<br>语法如下  </p>
-<pre><code>    &lt;targets ...&gt;: &lt;target-pattern&gt;: &lt;prereq-patterns ...&gt;
-        &lt;commands&gt;  
-    targets定义了一系列的目标文件，可以有通配符。是目标的一个集合。
-
-target-parrtern是指明了targets的模式，也就是的目标集模式。
-
-prereq-parrterns是目标的依赖模式，它对target-parrtern形成的模式再进行一次依赖 
-</code></pre>
-<p><strong>第一次看我也不懂这个说的是什么，还是看例子吧</strong>  </p>
-<ul>
-<li>如果我们把<target-parrtern>定义成“%.o”，意思就是 ： 我们<target>集合中都是以.o结尾的。  </li>
-<li>而如果我们的<prereq-parrterns>定义成“%.c”，意思是对<target-parrtern>所形成的目标集进行二次定义，其计算方法是，取<target-parrtern>模式中的“%”（也就是去掉了[.o]这个结尾），并为其加上[.c]这个结尾，形成的新集合。</li>
-</ul>
-<p><strong>实例如下</strong>   </p>
-<pre><code>objects = foo.o bar.o
-
-all: $(objects)
-
-$(objects): %.o: %.c  //这里是为了挑拣出foo.c和bar.c 作为上一步的依赖
-        $(CC) -c $(CFLAGS) $&lt; -o $@
-</code></pre>
-<p>上述例子中 指明了我们的目标从$object中获取，“%.o”表明要所有以“.o”结尾的目标，也就是“foo.o bar.o”，也就是变量$object集合的模式，而依赖模式“%.c”则取模式“%.o”的“%”，也就是“foo bar”，并为其加下“.c”的后缀，于是，我们的依赖目标就是“foo.c bar.c”  </p>
-<p>而命令中的 <strong>“$&lt;”</strong> 和 <strong>“$@”</strong> 则是自动化变量，“$&lt;”表示所有的依赖目标集（也就是“foo.c bar.c”），“$@”表示目标集（也就是“foo.o bar.o”）   </p>
-<h4 id="自动生成依赖性"><a href="#自动生成依赖性" class="headerlink" title="自动生成依赖性"></a>自动生成依赖性</h4><p>在Makefile中，我们的依赖关系可能会需要包含一系列的头文件，比如，如果我们的main.c中有一句“#include “defs.h””，那么我们的依赖关系应该是： </p>
-<pre><code>main.o : main.c defs.h  
-</code></pre>
-<p>但是，如果是一个比较大型的工程，你必需清楚哪些C文件包含了哪些头文件，并且，你在加入或删除头文件时，也需要小心地修改Makefile，这是一个很没有维护性的工作。为了避免这种繁重而又容易出错的事情，我们可以使用C&#x2F;C++编译的一个功能。大多数的C&#x2F;C++编译器都支持一个“-M”的选项，即自动找寻源文件中包含的头文件，并生成一个依赖关系。例如，如果我们执行下面的命令：  </p>
-<pre><code>    cc -M main.c  
-</code></pre>
-<p>其输出是  </p>
-<pre><code>    main.o : main.c defs.h  
-</code></pre>
-<p>是由编译器自动生成的依赖关系，这样一来，你就不必再手动书写若干文件的依赖关系，而由编译器自动生成了。需要提醒一句的是，如果你使用GNU的C&#x2F;C++编译器，你得用“-MM”参数  </p>
-<p><strong>这一部分不是很懂留到之后研究</strong>  </p>
-<h1 id="书写命令"><a href="#书写命令" class="headerlink" title="书写命令"></a>书写命令</h1><h4 id="显示命令"><a href="#显示命令" class="headerlink" title="显示命令"></a>显示命令</h4><p>通常，make会把其要执行的命令行在命令执行前输出到屏幕上。当我们用“@”字符在命令行前，那么，这个命令将不被make显示出来<br>带入make参数“-n”或“–just-print”，那么其只是显示命令，但不会执行命令  </p>
-<h4 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h4><p> 当依赖目标新于目标时，也就是当规则的目标需要被更新时，make会一条一条的执行其后的命令<br> <strong>如果你要让上一条命令的结果应用在下一条命令时，你应该使用分号分隔这两条命令</strong>  </p>
-<h4 id="嵌套执行make"><a href="#嵌套执行make" class="headerlink" title="嵌套执行make"></a>嵌套执行make</h4><p>语法如下  </p>
-<pre><code>subsystem:
-        cd subdir &amp;&amp; $(MAKE)  
-</code></pre>
-<p>其等价于  </p>
-<pre><code>subsystem:
-        $(MAKE) -C subdir  
-</code></pre>
-<ul>
-<li>这两个例子的意思都是先进入“subdir”目录，然后执行make命令.我们把这个叫做总控Makefile,总控Makefile的变量可以传递到下级的Makefile中（如果你显示的声明），但是不会覆盖下层的Makefile中所定义的变量，除非指定了“-e”参数。  </li>
-<li>需要注意的是，有两个变量，一个是 <strong>SHELL</strong> ，一个是 <strong>MAKEFLAGS</strong> ，这两个变量不管你是否export，其总是要传递到下层Makefile中，这是一个系统级的环境变量.  </li>
-<li>还有一个在“嵌套执行”中比较有用的参数，“-w”或是“–print-directory”会在make的过程中输出一些信息，让你看到目前的工作目录。  <h1 id="使用变量"><a href="#使用变量" class="headerlink" title="使用变量"></a>使用变量</h1><h4 id="变量的基础"><a href="#变量的基础" class="headerlink" title="变量的基础"></a>变量的基础</h4>定义变量的初值时用“&#x3D;”。<br>“:&#x3D;”  前面的变量不能使用后面的变量，只能使用前面已定义好了的变.<br>“？&#x3D;” 其含义是，如果变量没有被定义过，那么变量的值就是“bar”，如果变量先前被定义过，那么这条语将什么也不做。<br>“+&#x3D;” 追加变量的值</li>
-</ul>
-<h5 id="变量的高级用法"><a href="#变量的高级用法" class="headerlink" title="变量的高级用法"></a>变量的高级用法</h5><ol>
-<li>变量值的替换<br> 可以代替变量中的共有部分，格式是“$(var:a&#x3D;b)”或是“${var:a&#x3D;b}”，把变量“var”中所有以“a”字串“结尾”的“a”替换成“b”字串。</li>
-</ol>
-<p><strong>实例</strong>  </p>
-<pre><code>foo := a.o b.o c.o
-bar := $(foo:.o=.c)  
-把foo变量中.o结尾的都换成.c结尾的。所以$(bar)的值就是“a.c b.c c.c”  
-</code></pre>
-<p><strong>另外一种变量替换的方法是静态模式</strong><br><strong>还有一个替换函数，这个函数有三个参数，第一个参数是被替换字符，第二个参数是替换字符，第三个参数是替换操作作用的字串</strong> 实例如下所示  </p>
-<pre><code>$(subst &lt;aa&gt;,&lt;bb&gt;,&lt;text&gt;)
-把text中的aa替换成bb  
-
-    
-</code></pre>
-<ol start="2">
-<li><p>把变量的值再当变量  </p>
-<p> x &#x3D; y<br> y &#x3D; z<br> a :&#x3D; $($(x))</p>
-</li>
-</ol>
-<h1 id="使用条件判断"><a href="#使用条件判断" class="headerlink" title="使用条件判断"></a>使用条件判断</h1><h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><ul>
-<li>ifeq (<arg1>, <arg2>)   else 比较参数“arg1”和“arg2”的值是否相同  </li>
-<li>ifneq (<arg1>, <arg2>) else  比较参数“arg1”和“arg2”的值是否相同，如果不同，则为真。  </li>
-<li>ifdef <variable-name>  else 如果变量<variable-name>的值非空，那到表达式为真  </li>
-<li>ifndef <variable-name> else 如果变量<variable-name>的值非空，那到表达式为假</li>
-</ul>
-<h1 id="使用函数"><a href="#使用函数" class="headerlink" title="使用函数"></a>使用函数</h1><h4 id="函数的调用"><a href="#函数的调用" class="headerlink" title="函数的调用"></a>函数的调用</h4><pre><code> $(&lt;function&gt; &lt;arguments&gt;)  
- //&lt;function&gt;就是函数名，make支持的函数不多。&lt;arguments&gt;是函数的参数，参数间以逗号“,”分隔
-</code></pre>
-<h4 id="字符串处理函数"><a href="#字符串处理函数" class="headerlink" title="字符串处理函数"></a>字符串处理函数</h4><p><strong>字符串替换函数——subst</strong>  </p>
-<pre><code>$(subst &lt;from&gt;,&lt;to&gt;,&lt;text&gt;) //上面笔记记录郭这个函数  
-</code></pre>
-<p><strong>模式字符串替换函数——patsubst</strong> </p>
-<pre><code>$(patsubst &lt;pattern&gt;,&lt;replacement&gt;,&lt;text&gt;)
-</code></pre>
-<p>查找<text>中的单词（单词以“空格”、“Tab”或“回车”“换行”分隔）是否符合模式<pattern>如果匹配的话，则以<replacement>替换。例如  </p>
-<pre><code>$(patsubst %.c,%.o,x.c.c bar.c)  
-//把字串“x.c.c bar.c”符合模式[%.c]的单词替换成[%.o]，返回结果是“x.c.o bar.o”
-</code></pre>
-<p>和静态模式相似，不过这个函数用处更广<br><strong>去空格函数——strip</strong>  </p>
-<pre><code>$(strip &lt;string&gt;)  
-</code></pre>
-<p>去掉<string>字串中开头和结尾的空字符  </p>
-<p><strong>查找字符串函数——findstring</strong>  </p>
-<pre><code>$(findstring &lt;find&gt;,&lt;in&gt;)  
-</code></pre>
-<p>在字串<in>中查找<find>字串</p>
-<p><strong>过滤函数——filter</strong>  </p>
-<pre><code>$(filter &lt;pattern...&gt;,&lt;text&gt;)  
-</code></pre>
-<p>以<pattern>模式过滤<text>字符串中的单词，保留符合模式<pattern>的单词。可以有多个模式。  </p>
-<p><strong>反过滤函数——filter-out</strong>  </p>
-<pre><code>$(filter-out &lt;pattern...&gt;,&lt;text&gt;)  
-</code></pre>
-<p>以<pattern>模式过滤<text>字符串中的单词，去除符合模式<pattern>的单词。可以有多个模式  </p>
-<h1 id="规范"><a href="#规范" class="headerlink" title="规范"></a>规范</h1><pre><code>“all”
-    这个伪目标是所有目标的目标，其功能一般是编译所有的目标。
- “clean”
-    这个伪目标功能是删除所有被make创建的文件。
- “install”
-    这个伪目标功能是安装已编译好的程序，其实就是把目标执行文件拷贝到指定的目标中去。
- “print”
-    这个伪目标的功能是例出改变过的源文件。
- “tar”
-    这个伪目标功能是把源程序打包备份。也就是一个tar文件。
- “dist”
-    这个伪目标功能是创建一个压缩文件，一般是把tar文件压成Z文件。或是gz文件。
- “TAGS”
-    这个伪目标功能是更新所有的目标，以备完整地重编译使用。
- “check”和“test”
-    这两个伪目标一般用来测试makefile的流程。
-</code></pre>
-<h1 id="隐含规则"><a href="#隐含规则" class="headerlink" title="隐含规则"></a>隐含规则</h1><h4 id="使用隐含规则"><a href="#使用隐含规则" class="headerlink" title="使用隐含规则"></a>使用隐含规则</h4><p>make会在自己的“隐含规则”库中寻找可以用的规则，如果找到，那么就会使用。如果找不到，那么就会报错  </p>
-<pre><code>foo : foo.o bar.o
-        cc –o foo foo.o bar.o $(CFLAGS) $(LDFLAGS)  
-</code></pre>
-<p>我们可以注意到，这个Makefile中并没有写下如何生成foo.o和bar.o这两目标的规则和命令。因为make的“隐含规则”功能会自动为我们自动去推导这两个目标的依赖目标和生成命令。<br><strong>上面例子的本来面目是</strong>  </p>
-<pre><code>foo.o : foo.c
-        cc –c foo.c $(CFLAGS)
-bar.o : bar.c
-    cc –c bar.c $(CFLAGS)  
-    
-</code></pre>
-<p><strong>make调用的隐含规则是，把[.o]的目标的依赖文件置成[.c]，并使用C的编译命令“cc –c $(CFLAGS) [.c]”来生成[.o]的目标</strong>   </p>
-<ul>
-<li><p>如果我们为[.o]文件书写了自己的规则，那么make就不会自动推导并调用隐含规则，它会按照我们写好的规则忠实地执行  </p>
-</li>
-<li><p>还有，在make的“隐含规则库”中，每一条隐含规则都在库中有其顺序，越靠前的则是越被经常使用的，所以，这会导致我们有些时候即使我们显示地指定了目标依赖，make也不会管。如下  </p>
-<p>  foo.o : foo.p</p>
-<p>  如果目录下存在了“foo.c”文件，那么我们的隐含规则一样会生效，并会通过“foo.c”调用C的编译器生成foo.o文件</p>
-</li>
-</ul>
-<h4 id="隐含规则总结"><a href="#隐含规则总结" class="headerlink" title="隐含规则总结"></a>隐含规则总结</h4><p><strong>编译C程序的隐含规则</strong><br>“<n>.o”的目标的依赖目标会自动推导为“<n>.c”，并且其生成命令是“$(CC) –c $(CPPFLAGS) $(CFLAGS)”<br><strong>编译C++程序的隐含规则</strong><br>“<n>.o”的目标的依赖目标会自动推导为“<n>.cc”或是“<n>.C”，并且其生成命令是“$(CXX) –c $(CPPFLAGS) $(CFLAGS)”  </p>
-<h4 id="隐含规则使用的变量"><a href="#隐含规则使用的变量" class="headerlink" title="隐含规则使用的变量"></a>隐含规则使用的变量</h4><p>第一条隐含规则——编译C程序的隐含规则的命令  </p>
-<pre><code>$(CC) –c $(CFLAGS) $(CPPFLAGS)    
-//如果你把变量“$(CC)”重定义成“gcc”，把变量“$(CFLAGS)”重定义成“-g”，那么，隐含规则中的命令全部会以“gcc –c -g $(CPPFLAGS)”的样子来执行了。  
-</code></pre>
-<p><strong>我们可以把隐含规则中使用的变量分成两种：一种是命令相关的，如“CC”；一种是参数相的关，如“CFLAGS”。</strong> 记录一下重要的常用的 </p>
-<ol>
-<li>关于命令的变量。</li>
-</ol>
-<ul>
-<li><p>CC  </p>
-<pre><code>  C语言编译程序。默认命令是“cc”  
-</code></pre>
-</li>
-<li><p>CXX   </p>
-<pre><code>  C++语言编译程序。默认命令是“g++”
-</code></pre>
-</li>
-</ul>
-<ol start="2">
-<li>关于命令参数的变量</li>
-</ol>
-<ul>
-<li><p>CFLAGS  </p>
-<pre><code>  C语言编译器参数   
-</code></pre>
-</li>
-<li><p>CPPFLAGS  </p>
-<pre><code>  C预处理器参数
-</code></pre>
-</li>
-</ul>
-<h1 id="自动化变量-常用的见过的"><a href="#自动化变量-常用的见过的" class="headerlink" title="自动化变量  (常用的见过的)"></a>自动化变量  (常用的见过的)</h1><ul>
-<li><p>$@  </p>
-<p>  表示规则中的目标文件集。在模式规则中，如果有多个目标，那么，”$@”就是匹配于目标中模式定义的集合  </p>
-</li>
-<li><p>$%<br>  不太懂  </p>
-</li>
-<li><p>$&lt;<br>   依赖目标中的第一个目标名字。如果依赖目标是以模式（即”%”）定义的，那么”$&lt;”将是符合模式的一系列的文件集。注意，其是一个一个取出来的。  </p>
-</li>
-<li><p>$?<br>  所有比目标新的依赖目标的集合。以空格分隔。  </p>
-</li>
-<li><p>$^<br>  所有的依赖目标的集合</p>
-</li>
-</ul>
-<h1 id="Makefile-例程如下"><a href="#Makefile-例程如下" class="headerlink" title="Makefile 例程如下"></a>Makefile 例程如下</h1><p><a href="/download/Makefile.zip">点击下载</a></p>
-
       
     </div>
 
