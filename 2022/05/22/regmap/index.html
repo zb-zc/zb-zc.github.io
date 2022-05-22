@@ -20,25 +20,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="果淉菓">
-<meta property="og:type" content="website">
-<meta property="og:title" content="嵌入式">
-<meta property="og:url" content="http://example.com/archives/2022/04/index.html">
+    <meta name="description" content="在看usb hub 3503a驱动的I2C部分时，发现驱动中没有用到I2C核心提供的API进行总线驱动（适配器）和设备驱动之间进行数据交换，而是使用了regmap机制，所以在这里学习一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内核regmap机制">
+<meta property="og:url" content="http://example.com/2022/05/22/regmap/index.html">
 <meta property="og:site_name" content="嵌入式">
-<meta property="og:description" content="果淉菓">
+<meta property="og:description" content="在看usb hub 3503a驱动的I2C部分时，发现驱动中没有用到I2C核心提供的API进行总线驱动（适配器）和设备驱动之间进行数据交换，而是使用了regmap机制，所以在这里学习一下">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-22T04:23:34.711Z">
+<meta property="article:modified_time" content="2022-05-22T04:23:34.723Z">
 <meta property="article:author" content="赵博">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/archives/2022/04/">
+<link rel="canonical" href="http://example.com/2022/05/22/regmap/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"archives/2022/04/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/05/22/regmap/","path":"2022/05/22/regmap/","title":"内核regmap机制"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>归档 | 嵌入式</title>
+<title>内核regmap机制 | 嵌入式</title>
   
 
 
@@ -68,7 +70,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">嵌入式</h1>
+      <p class="site-title">嵌入式</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">记录每一次成长</p>
@@ -101,7 +103,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -114,6 +116,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#regmap%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">regmap机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8regmap%E6%9C%BA%E5%88%B6%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">1.0.1.</span> <span class="nav-text">使用regmap机制的流程</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -160,49 +163,123 @@
 </noscript>
 
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 9 篇日志。 继续努力。</span>
-      </div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/22/regmap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="赵博">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="嵌入式">
+      <meta itemprop="description" content="果淉菓">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="内核regmap机制 | 嵌入式">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          内核regmap机制
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-22 12:23:34" itemprop="dateCreated datePublished" datetime="2022-05-22T12:23:34+08:00">2022-05-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux%E5%86%85%E6%A0%B8%E9%A9%B1%E5%8A%A8/" itemprop="url" rel="index"><span itemprop="name">Linux内核驱动</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>在看usb hub 3503a驱动的I2C部分时，发现驱动中没有用到I2C核心提供的API进行总线驱动（适配器）和设备驱动之间进行数据交换，而是使用了regmap机制，所以在这里学习一下  </p>
+<span id="more"></span>
+
+<h1 id="regmap机制"><a href="#regmap机制" class="headerlink" title="regmap机制"></a>regmap机制</h1><ul>
+<li>Linux引入了regmap来统一管理内核的I2C, SPI等总线，将I2C, SPI驱动做了一次重构，把I&#x2F;O读写的重复逻辑在regmap中实现。只需初始化时指定总线类型、寄存器位宽等关键参数，即可通过regmap模型接口来操作器件寄存器。</li>
+<li>regmap同样适用于操作cpu自身的寄存器。将i2c、spi、mmio、irq都抽象出统一的接口regmap_read、regmap_write、regmap_update_bits等接口 ，从而提高代码的可重用性，并且使得在使用如上内核基础组件时变得更为简单易用</li>
+<li>在之前的I2C设备驱动中，都是通过I2C核心提供的i2c_transfer函数进行数据交换，在linux 3.1以后使用了regmap机制</li>
+</ul>
+<h3 id="使用regmap机制的流程"><a href="#使用regmap机制的流程" class="headerlink" title="使用regmap机制的流程"></a>使用regmap机制的流程</h3><ol>
+<li>使用前，只需根据外设属性配置配置regmap信息（总线类型、寄存器位宽、缓存类型、读写属性等参数）；</li>
+<li>接着注册一个regmap实例；</li>
+<li>然后调用抽象访问接口访问寄存器；</li>
+<li>不想使用的时候，释放regmap实例即可。</li>
+</ol>
+<p><strong>在3503驱动中regmap运用如下</strong>   </p>
+<pre><code>    hub-&gt;regmap = devm_regmap_init_i2c(i2c, &amp;usb3503_regmap_config);
+
+    static const struct regmap_config usb3503_regmap_config = &#123;
+        .reg_bits = 8, // 寄存器地址位宽
+        .val_bits = 8,// 寄存器值的位宽，必须填写
+
+        .max_register = USB3503_RESET,
+        //内核注释中@max_register: Optional, specifies the maximum valid register address 最大有效的寄存器地址  
+
+    &#125;;
+    regmap_write();
+</code></pre>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-04-28T23:51:57+08:00"
-              content="2022-04-28">
-          04-28
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/28/hello-world/" itemprop="url">
-            <span itemprop="name">Hello World</span>
-          </a>
-      </div>
+    <footer class="post-footer">
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/22/I2C%E9%A9%B1%E5%8A%A8/" rel="prev" title="">
+                  <i class="fa fa-chevron-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
 
 </div>
   </main>

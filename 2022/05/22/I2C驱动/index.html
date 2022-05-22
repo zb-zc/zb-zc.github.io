@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="title: I2C驱动categories: Linux内核驱动   I2C的硬件结构：I2C在硬件上是由两条数据线组成，一个是SCL 时钟线，一个是SDA 数据线，空闲的时候SCL 和SDA 要处于高电平，所以在硬件设计上这俩个线要加上拉电阻。I2C驱动结构：Linux 中定义了I2C 驱动的体系结构，即I2C 总线驱动和I2C 设备驱动还有I2C核心">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式">
+<meta property="og:url" content="http://example.com/2022/05/22/I2C%E9%A9%B1%E5%8A%A8/index.html">
+<meta property="og:site_name" content="嵌入式">
+<meta property="og:description" content="title: I2C驱动categories: Linux内核驱动   I2C的硬件结构：I2C在硬件上是由两条数据线组成，一个是SCL 时钟线，一个是SDA 数据线，空闲的时候SCL 和SDA 要处于高电平，所以在硬件设计上这俩个线要加上拉电阻。I2C驱动结构：Linux 中定义了I2C 驱动的体系结构，即I2C 总线驱动和I2C 设备驱动还有I2C核心">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/I2C%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F.png?raw=true">
+<meta property="article:published_time" content="2022-05-22T04:23:13.161Z">
+<meta property="article:modified_time" content="2022-05-22T04:23:13.189Z">
+<meta property="article:author" content="赵博">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/I2C%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F.png?raw=true">
+
+
+<link rel="canonical" href="http://example.com/2022/05/22/I2C%E9%A9%B1%E5%8A%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/05/22/I2C%E9%A9%B1%E5%8A%A8/","path":"2022/05/22/I2C驱动/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | 嵌入式</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">嵌入式</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录每一次成长</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">0</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">1</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">9</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#I2C%E6%80%BB%E7%BA%BF%E9%A9%B1%E5%8A%A8"><span class="nav-number">1.</span> <span class="nav-text">I2C总线驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I2C%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8"><span class="nav-number">2.</span> <span class="nav-text">I2C设备驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I2C%E6%A0%B8%E5%BF%83%E5%B1%82"><span class="nav-number">3.</span> <span class="nav-text">I2C核心层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">实例分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I2C%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6"><span class="nav-number">5.</span> <span class="nav-text">I2C驱动程序框架</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">赵博</p>
+  <div class="site-description" itemprop="description">果淉菓</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/22/I2C%E9%A9%B1%E5%8A%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="赵博">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="嵌入式">
+      <meta itemprop="description" content="果淉菓">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 嵌入式">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-22 12:23:13" itemprop="dateCreated datePublished" datetime="2022-05-22T12:23:13+08:00">2022-05-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <hr>
+<p>title: I2C驱动<br>categories: Linux内核驱动 </p>
+<hr>
+<p>I2C的硬件结构：I2C在硬件上是由两条数据线组成，一个是SCL 时钟线，一个是SDA 数据线，空闲的时候SCL 和SDA 要处于高电平，所以在硬件设计上这俩个线要加上拉电阻。<br>I2C驱动结构：Linux 中定义了I2C 驱动的体系结构，即I2C 总线驱动和I2C 设备驱动还有I2C核心</p>
+<span id="more"></span>  
+
+
+<h3 id="I2C总线驱动"><a href="#I2C总线驱动" class="headerlink" title="I2C总线驱动"></a>I2C总线驱动</h3><p>I2C总线驱动重点是 I2C适配器 (也就是 SOC的 I2C接口控制器 )驱动，这里要用到两个重要的数据结构： i2c_adapter和 i2c_algorithm Linux内核将 SOC的 I2C适配器 (控制器 )抽象成 i2c_adapter ，一般情况下不会去改动，因为这是有关平台的i2c控制器的驱动</p>
+<h3 id="I2C设备驱动"><a href="#I2C设备驱动" class="headerlink" title="I2C设备驱动"></a>I2C设备驱动</h3><p>I2C设备驱动重点关注两个数据结构： i2c_client和 i2c_driver。根据总线、设备和驱动模型，还剩下设备和驱动， i2c_client就是描述设备信息的， i2c_driver描述驱动内容。<br><strong>1.i2c_client</strong><br>i2c_client结构体定义在 include&#x2F;linux&#x2F;i2c.h文件中，内容如下：</p>
+<pre><code>struct i2c_client &#123;
+    unsigned short flags;	//标志
+#define I2C_CLIENT_PEC		0x04	/* Use Packet Error Checking */
+#define I2C_CLIENT_TEN		0x10	/* we have a ten bit chip address */
+                    /* Must equal I2C_M_TEN below */
+#define I2C_CLIENT_SLAVE	0x20	/* we are the slave */
+#define I2C_CLIENT_HOST_NOTIFY	0x40	/* We want to use I2C host notify */
+#define I2C_CLIENT_WAKE		0x80	/* for board_info; true iff can wake */
+#define I2C_CLIENT_SCCB		0x9000	/* Use Omnivision SCCB protocol */
+                    /* Must match I2C_M_STOP|IGNORE_NAK */
+
+    unsigned short addr;		//芯片地址
+                    /* addresses are stored in the	*/
+                    /* _LOWER_ 7 bits		*/
+    char name[I2C_NAME_SIZE];   //名字
+    struct i2c_adapter *adapter;	/*对应的I2C总线（适配器）	*/
+    struct device dev;		/* 设备结构体		*/
+    int init_irq;			/* irq set at initialization	*/
+    int irq;			/*中断	*/
+    struct list_head detected;
+#if IS_ENABLED(CONFIG_I2C_SLAVE)
+    i2c_slave_cb_t slave_cb;	/* callback for slave mode	*/
+#endif
+&#125;;
+</code></pre>
+<p><strong>一个设备对应一个 i2c_client，每检测到一个 I2C设备就会给这个 I2C设备分配一个i2c_client</strong><br><strong>2.i2c_driver结构体</strong><br>i2c_driver类似 platform_driver，是我们编写 I2C设备驱动重点要处理的内容， i2c_driver结构体定义在 include&#x2F;linux&#x2F;i2c.h文件中，内容如下：  </p>
+<pre><code>struct i2c_driver &#123;
+    unsigned int class;
+
+    /* Standard driver model interfaces */
+    int (*probe)(struct i2c_client *client, const struct i2c_device_id *id);//当 I2C设备和驱动匹配成功以后 probe函数就会执行，和 platform驱动一样。
+    int (*remove)(struct i2c_client *client);
+
+    /* New driver model interface to aid the seamless removal of the
+    * current probe()&#39;s, more commonly unused than used second parameter.
+    */
+    int (*probe_new)(struct i2c_client *client);
+
+    /* driver model interfaces that don&#39;t relate to enumeration  */
+    void (*shutdown)(struct i2c_client *client);
+
+    /* Alert callback, for example for the SMBus alert protocol.
+    * The format and meaning of the data value depends on the protocol.
+    * For the SMBus alert protocol, there is a single bit of data passed
+    * as the alert response&#39;s low bit (&quot;event flag&quot;).
+    * For the SMBus Host Notify protocol, the data corresponds to the
+    * 16-bit payload data reported by the slave device acting as master.
+    */
+    void (*alert)(struct i2c_client *client, enum i2c_alert_protocol protocol,
+            unsigned int data);
+
+    /* a ioctl like command that can be used to perform specific functions
+    * with the device.
+    */
+    int (*command)(struct i2c_client *client, unsigned int cmd, void *arg);
+
+    struct device_driver driver;//驱动结构体，如果使用设备树的话，需要设置 device_driver的of_match_table成员变量，也就是驱动的兼容 (compatible)
+    const struct i2c_device_id *id_table;
+
+    /* Device detection callback for automatic device creation */
+    int (*detect)(struct i2c_client *client, struct i2c_board_info *info);
+    const unsigned short *address_list;
+    struct list_head clients;
+
+    bool disable_i2c_core_irq_mapping;
+&#125;;
+</code></pre>
+<h3 id="I2C核心层"><a href="#I2C核心层" class="headerlink" title="I2C核心层"></a>I2C核心层</h3><p><strong>核心层提供了一组不依赖于硬件平台的接口函数。</strong></p>
+<ol>
+<li><p>I2C传输函数<br>当设备和驱动匹配以后 i2c_driver里面的 probe函数就会执行， probe函数里面所做的就是字符设备驱动那一套了。 一般需要在 probe函数里面初始化 I2C设备，要初始化 I2C设备就必须能够对 I2C设备寄存器进行读写操作，这里就要用到 <strong>i2c_transfer</strong>函数了。函数如下</p>
+<pre><code>int i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+* @adap: Handle to I2C bus
+* @msgs: One or more messages to execute before STOP is issued to
+*	terminate the operation; each message begins with a START.
+* @num: Number of messages to be executed.
+</code></pre>
+</li>
+<li><p>增加&#x2F;删除i2c_adapter </p>
+</li>
+<li><p>增加&#x2F;删除i2c_driver驱动<br>对于我们 I2C设备驱动编写人来说，重点工作就是构建 i2c_driver，构建完成以后需要向Linux内核注册这个 i2c_driver。i2c_driver注册函数为 int i2c_register_driver，此函数原型为  </p>
+<pre><code> int i2c_register_driver(struct module *owner, struct i2c_driver *driver)  
+ //函数参数和返回值含义如下：
+ owner 一般为 THIS_MODULE。
+ driver：要注册的 i2c_driver。
+ 返回值： 0，成功；负值，失败。
+</code></pre>
+</li>
+</ol>
+<p>i2c_add_driver就是对 i2c_register_driver做了一个简单的封装，只有一个参数，就是要注册的 i2c_driver<br>注销 I2C设备驱动的时候需要将前面注册的 i2c_driver从 Linux内核中注销掉，需要用到i2c_del_driver函数，此函数原型如下：  </p>
+<pre><code>void i2c_del_driver(struct i2c_driver *driver)
+函数参数和返回值含义如下：
+driver：要注销的 i2c_driver。
+返回值： 无。
+</code></pre>
+<h3 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h3><ol>
+<li><p>i2c总线驱动（适配器）：一般由soc厂家提供</p>
+</li>
+<li><p>i2c设备驱动编写流程：这里我们使用设备树的情况。<br>使用设备树的时候 I2C设备信息通过创建相应的节点就行了，如果在I2C1上接设备。只需要在i2c1节点下创建设备子节点。如下是devicetree i2c1节点  </p>
+<pre><code> &amp;i2c_1 &#123;
+     #address-cells = &lt;1&gt;;
+     #size-cells = &lt;0&gt;;
+     samsung,i2c-sda-delay = &lt;100&gt;;
+     samsung,i2c-max-bus-freq = &lt;400000&gt;;
+     pinctrl-0 = &lt;&amp;i2c1_bus&gt;;
+     pinctrl-names = &quot;default&quot;;
+     status = &quot;okay&quot;;
+ &#125;
+ //#address-cells以及size-cells属性在/linux-5.3.18/Documentation/devicetree/bindings/i2c-exynos5.txt文档中可知：  
+         - #address-cells: always 1 (for i2c addresses)
+         - #size-cells: always 0
+ //对于samsung,i2c-sda-delay = &lt;100&gt;;属性；查看/linux-5.3.18/Documentation/devicetree/bindings/i2c-exynos5.txt文档中是没有的。
+ 但是用以下命令grep -r samsung,i2c-sda-delay /home/zhaobo/Work_place/itop4412_kernel_4_14_2_bsp/linux-4.14.2_iTop-4412_scp/Documentation/devicetree/ 
+ 搜得/home/zhaobo/Work_place/itop4412_kernel_4_14_2_bsp/linux-4.14.2_iTop-4412_scp/Documentation/devicetree/bindings/i2c/i2c-s3c2410.txt有关于这个属性的文档解释如下：
+         - samsung,i2c-sda-delay: Delay (in ns) applied to data line (SDA) edges.
+ //对于pinctrl-0属性同上也可搜得
+         - pinctrl-0: Pin control group to be used for this controller.  
+ //pinctrl-names属性同上可搜得  
+         - pinctrl-names: Should contain only one value - &quot;default&quot;
+ //samsung,i2c-max-bus-freq属性同上可搜得 
+         - samsung,i2c-max-bus-freq: Desired frequency in Hz of the bus. If notspecified, the default value in Hz is 100000.
+</code></pre>
+</li>
+</ol>
+<p>在i2c1节点下创建子节点 （先寻找文档）根据文档来写子节对应得驱动点可以参考一下3503A驱动</p>
+<h3 id="I2C驱动程序框架"><a href="#I2C驱动程序框架" class="headerlink" title="I2C驱动程序框架"></a>I2C驱动程序框架</h3><p><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/I2C%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F.png?raw=true" alt="image"> </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/22/%E5%9D%97%E8%AE%BE%E5%A4%87/" rel="prev" title="">
+                  <i class="fa fa-chevron-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/22/regmap/" rel="next" title="内核regmap机制">
+                  内核regmap机制 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赵博</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
