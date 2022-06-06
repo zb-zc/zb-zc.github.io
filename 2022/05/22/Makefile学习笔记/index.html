@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -422,13 +422,10 @@ $(objects): %.o: %.c  //这里是为了挑拣出foo.c和bar.c 作为上一步的
 <li>还有一个在“嵌套执行”中比较有用的参数，“-w”或是“–print-directory”会在make的过程中输出一些信息，让你看到目前的工作目录。  <h1 id="使用变量"><a href="#使用变量" class="headerlink" title="使用变量"></a>使用变量</h1><h4 id="变量的基础"><a href="#变量的基础" class="headerlink" title="变量的基础"></a>变量的基础</h4>定义变量的初值时用“&#x3D;”。<br>“:&#x3D;”  前面的变量不能使用后面的变量，只能使用前面已定义好了的变.<br>“？&#x3D;” 其含义是，如果变量没有被定义过，那么变量的值就是“bar”，如果变量先前被定义过，那么这条语将什么也不做。<br>“+&#x3D;” 追加变量的值</li>
 </ul>
 <h5 id="变量的高级用法"><a href="#变量的高级用法" class="headerlink" title="变量的高级用法"></a>变量的高级用法</h5><ol>
-<li>变量值的替换<br> 可以代替变量中的共有部分，格式是“$(var:a&#x3D;b)”或是“${var:a&#x3D;b}”，把变量“var”中所有以“a”字串“结尾”的“a”替换成“b”字串。</li>
+<li><p>变量值的替换<br> 可以代替变量中的共有部分，格式是“$(var:a&#x3D;b)”或是“${var:a&#x3D;b}”，把变量“var”中所有以“a”字串“结尾”的“a”替换成“b”字串。<br><strong>实例</strong>  </p>
+<p> foo :&#x3D; a.o b.o c.o<br> bar :&#x3D; $(foo:.o&#x3D;.c)<br> 把foo变量中.o结尾的都换成.c结尾的。所以$(bar)的值就是“a.c b.c c.c”</p>
+</li>
 </ol>
-<p><strong>实例</strong>  </p>
-<pre><code>foo := a.o b.o c.o
-bar := $(foo:.o=.c)  
-把foo变量中.o结尾的都换成.c结尾的。所以$(bar)的值就是“a.c b.c c.c”  
-</code></pre>
 <p><strong>另外一种变量替换的方法是静态模式</strong><br><strong>还有一个替换函数，这个函数有三个参数，第一个参数是被替换字符，第二个参数是替换字符，第三个参数是替换操作作用的字串</strong> 实例如下所示  </p>
 <pre><code>$(subst &lt;aa&gt;,&lt;bb&gt;,&lt;text&gt;)
 把text中的aa替换成bb  

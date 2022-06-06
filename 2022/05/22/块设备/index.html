@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -236,9 +236,8 @@
 <h2 id="块设备驱动框架"><a href="#块设备驱动框架" class="headerlink" title="块设备驱动框架"></a>块设备驱动框架</h2><h3 id="bio-、request和request-queue"><a href="#bio-、request和request-queue" class="headerlink" title="bio 、request和request_queue"></a>bio 、request和request_queue</h3><ul>
 <li>bio：通常一个Bio对应上层传递给块层的I&#x2F;O请求   </li>
 <li>request:一个request中包含了一个或多个bio.它存在的目的就是为了进行io的调度。通过request这个辅助结构，我们来给bio进行某种调度方法的排序，从而最大化地提高磁盘访问速度。  </li>
-<li>request_queue:每个磁盘对应一个request_queue.该队列挂的就是request请求。   <h3 id="驱动中涉及的处理Bio、request和requeset-queue的主要API"><a href="#驱动中涉及的处理Bio、request和requeset-queue的主要API" class="headerlink" title="驱动中涉及的处理Bio、request和requeset_queue的主要API"></a>驱动中涉及的处理Bio、request和requeset_queue的主要API</h3></li>
+<li>request_queue:每个磁盘对应一个request_queue.该队列挂的就是request请求。   <h3 id="驱动中涉及的处理Bio、request和requeset-queue的主要API"><a href="#驱动中涉及的处理Bio、request和requeset-queue的主要API" class="headerlink" title="驱动中涉及的处理Bio、request和requeset_queue的主要API"></a>驱动中涉及的处理Bio、request和requeset_queue的主要API</h3><strong><font color=Red>request_queue</font></strong></li>
 </ul>
-<p><strong><font color=Red>request_queue</font></strong>    </p>
 <ol>
 <li><p>初始化请求队列  </p>
 <pre><code> request_queue *blk_init_queue(requeue_fn_proc *rfn, spinlock_t *lock)
