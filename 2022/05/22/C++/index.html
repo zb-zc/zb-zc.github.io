@@ -22,25 +22,27 @@
 
     <meta name="description" content="跟着侯捷老师复习一下C++，将笔记整理一下">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++">
+<meta property="og:title" content="C++基础语法">
 <meta property="og:url" content="http://example.com/2022/05/22/C++/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="跟着侯捷老师复习一下C++，将笔记整理一下">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/lambda.png?raw=true">
 <meta property="article:published_time" content="2022-05-22T14:46:18.023Z">
-<meta property="article:modified_time" content="2022-05-22T14:46:18.043Z">
+<meta property="article:modified_time" content="2022-06-24T14:19:12.939Z">
 <meta property="article:author" content="赵博">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/lambda.png?raw=true">
 
 
 <link rel="canonical" href="http://example.com/2022/05/22/C++/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/05/22/C++/","path":"2022/05/22/C++/","title":"C++"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/05/22/C++/","path":"2022/05/22/C++/","title":"C++基础语法"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>C++ | Hexo</title>
+<title>C++基础语法 | Hexo</title>
   
 
 
@@ -116,7 +118,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6%E4%B8%8E%E7%B1%BB%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">头文件与类的声明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E5%B8%83%E5%B1%80"><span class="nav-number">1.0.1.</span> <span class="nav-text">头文件的布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="nav-number">1.0.2.</span> <span class="nav-text">类的声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%BC%95%E5%87%BA"><span class="nav-number">1.0.3.</span> <span class="nav-text">模板的引出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inline-%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0"><span class="nav-number">1.0.4.</span> <span class="nav-text">inline 内联函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E7%BA%A7%E5%88%AB"><span class="nav-number">1.0.5.</span> <span class="nav-text">访问级别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%E4%B8%8E%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">3.</span> <span class="nav-text">参数传递与返回值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%8A%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%94%BE%E5%88%B0private%E9%87%8C%E9%9D%A2"><span class="nav-number">3.0.1.</span> <span class="nav-text">把构造函数放到private里面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0-%EF%BC%88const%EF%BC%89"><span class="nav-number">3.0.2.</span> <span class="nav-text">常量成员函数 （const）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">3.0.3.</span> <span class="nav-text">参数传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#friend-%E5%8F%8B%E5%85%83"><span class="nav-number">3.0.4.</span> <span class="nav-text">friend(友元)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-number">4.</span> <span class="nav-text">操作符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0-this"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">成员函数 this</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD%EF%BC%88%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%EF%BC%89"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">操作符重载（类成员函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD-%EF%BC%88%E9%9D%9E%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%EF%BC%89"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">操作符重载 （非成员函数）</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6%E4%B8%8E%E7%B1%BB%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">头文件与类的声明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E5%B8%83%E5%B1%80"><span class="nav-number">1.0.1.</span> <span class="nav-text">头文件的布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="nav-number">1.0.2.</span> <span class="nav-text">类的声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%BC%95%E5%87%BA"><span class="nav-number">1.0.3.</span> <span class="nav-text">模板的引出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inline-%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0"><span class="nav-number">1.0.4.</span> <span class="nav-text">inline 内联函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E7%BA%A7%E5%88%AB"><span class="nav-number">1.0.5.</span> <span class="nav-text">访问级别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%E4%B8%8E%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">3.</span> <span class="nav-text">参数传递与返回值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%8A%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%94%BE%E5%88%B0private%E9%87%8C%E9%9D%A2"><span class="nav-number">3.0.1.</span> <span class="nav-text">把构造函数放到private里面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0-%EF%BC%88const%EF%BC%89"><span class="nav-number">3.0.2.</span> <span class="nav-text">常量成员函数 （const）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#const-reference-%E5%92%8C-non-const-reference"><span class="nav-number">3.0.2.1.</span> <span class="nav-text">const reference 和 non-const reference</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#const-reference"><span class="nav-number">3.0.2.1.1.</span> <span class="nav-text">const reference</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#non-const-reference"><span class="nav-number">3.0.2.1.2.</span> <span class="nav-text">non-const reference</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8"><span class="nav-number">3.0.2.2.</span> <span class="nav-text">右值引用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">3.0.3.</span> <span class="nav-text">参数传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#friend-%E5%8F%8B%E5%85%83"><span class="nav-number">3.0.4.</span> <span class="nav-text">friend(友元)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-number">4.</span> <span class="nav-text">操作符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0-this"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">成员函数 this</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD%EF%BC%88%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%EF%BC%89"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">操作符重载（类成员函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD-%EF%BC%88%E9%9D%9E%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%EF%BC%89"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">操作符重载 （非成员函数）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E5%87%BD%E6%95%B0%EF%BC%9A%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E3%80%81%E6%8B%B7%E8%B4%9D%E8%B5%8B%E5%80%BC%E3%80%81%E6%9E%90%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">三大函数：拷贝构造、拷贝赋值、析构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#class%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%BB%8F%E5%85%B8%E5%88%86%E7%B1%BB"><span class="nav-number">5.0.1.</span> <span class="nav-text">class的两个经典分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0"><span class="nav-number">5.0.2.</span> <span class="nav-text">拷贝构造</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">5.0.3.</span> <span class="nav-text">移动构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-1"><span class="nav-number">5.0.3.1.</span> <span class="nav-text">移动构造函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9D%E8%B5%8B%E5%80%BC"><span class="nav-number">5.0.4.</span> <span class="nav-text">拷贝赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="nav-number">5.0.5.</span> <span class="nav-text">析构函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A0%86%EF%BC%8C%E6%A0%88%E4%BB%A5%E5%8F%8A%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">堆，栈以及内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stack%E6%A0%88"><span class="nav-number">6.0.1.</span> <span class="nav-text">stack栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#heap-%E5%A0%86"><span class="nav-number">6.0.2.</span> <span class="nav-text">heap 堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new"><span class="nav-number">6.0.3.</span> <span class="nav-text">new</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delect"><span class="nav-number">6.0.4.</span> <span class="nav-text">delect</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E6%A8%A1%E6%9D%BF"><span class="nav-number">7.</span> <span class="nav-text">类模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#static"><span class="nav-number">7.0.1.</span> <span class="nav-text">static</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%94%BE%E5%88%B0private%E4%B8%AD"><span class="nav-number">7.0.2.</span> <span class="nav-text">将构造函数放到private中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E6%A8%A1%E6%9D%BF-1"><span class="nav-number">7.0.3.</span> <span class="nav-text">类模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF"><span class="nav-number">7.0.4.</span> <span class="nav-text">函数模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#namespace"><span class="nav-number">7.0.5.</span> <span class="nav-text">namespace</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E5%92%8C%E7%BB%A7%E6%89%BF"><span class="nav-number">8.</span> <span class="nav-text">组合和继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#composition%EF%BC%88%E5%A4%8D%E5%90%88%EF%BC%89"><span class="nav-number">8.0.1.</span> <span class="nav-text">composition（复合）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%90%88%E5%85%B3%E7%B3%BB%E4%B8%8B%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="nav-number">8.0.2.</span> <span class="nav-text">复合关系下的构造和析构函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A7%94%E6%89%98-Delegation-x2F-composition-by-reference"><span class="nav-number">8.0.3.</span> <span class="nav-text">委托 Delegation &#x2F; composition by reference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Handle-x2F-Body-pImpI-%E6%A8%A1%E5%BC%8F"><span class="nav-number">8.0.4.</span> <span class="nav-text">Handle &#x2F;Body (pImpI) 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF"><span class="nav-number">8.0.5.</span> <span class="nav-text">继承</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E5%87%BD%E6%95%B0%E4%B8%8E%E5%A4%9A%E6%80%81"><span class="nav-number">9.</span> <span class="nav-text">虚函数与多态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">10.</span> <span class="nav-text">reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lambda%E5%87%BD%E6%95%B0"><span class="nav-number">11.</span> <span class="nav-text">lambda函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">11.1.</span> <span class="nav-text">lambda匿名函数的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">11.2.</span> <span class="nav-text">lambda函数的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0"><span class="nav-number">11.2.1.</span> <span class="nav-text">定义一个最简单的匿名函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84-%E5%A4%96%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-number">11.2.2.</span> <span class="nav-text">lambda匿名函数中的[外部变量]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">11.2.3.</span> <span class="nav-text">调用方法</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -187,12 +189,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="C++ | Hexo">
+      <meta itemprop="name" content="C++基础语法 | Hexo">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          C++
+          C++基础语法
         </h1>
 
         <div class="post-meta-container">
@@ -204,6 +206,13 @@
       <span class="post-meta-item-text">发表于</span>
 
       <time title="创建时间：2022-05-22 22:46:18" itemprop="dateCreated datePublished" datetime="2022-05-22T22:46:18+08:00">2022-05-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-24 22:19:12" itemprop="dateModified" datetime="2022-06-24T22:19:12+08:00">2022-06-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -229,43 +238,18 @@
 <span id="more"></span>  
 
 <h1 id="头文件与类的声明"><a href="#头文件与类的声明" class="headerlink" title="头文件与类的声明"></a>头文件与类的声明</h1><p>类的形式一般分为两种，一种使带指针的类，一种使不带指针的类；  </p>
-<h3 id="头文件的布局"><a href="#头文件的布局" class="headerlink" title="头文件的布局"></a>头文件的布局</h3><pre><code>#ifndef __COMPILE__
-#define __COMPILE__ 
-
-1. 前置声明  
-2. 类声明
-3. 类定义
-
-#endif  
+<h3 id="头文件的布局"><a href="#头文件的布局" class="headerlink" title="头文件的布局"></a>头文件的布局</h3><p>​    #ifndef <strong>COMPILE</strong><br>​    #define <strong>COMPILE</strong> </p>
+<pre><code>1. 前置声明  
+    2. 类声明
+    3. 类定义
 </code></pre>
-<h3 id="类的声明"><a href="#类的声明" class="headerlink" title="类的声明"></a>类的声明</h3><pre><code>class complex  //class head
-&#123;
-public:        //class body
-complex (double r = 0, double i = 0): re (r), im (i) &#123; &#125;
-complex&amp; operator += (const complex&amp;);
-complex&amp; operator -= (const complex&amp;);
-complex&amp; operator *= (const complex&amp;);
-complex&amp; operator /= (const complex&amp;);
-double real () const &#123; return re; &#125;
-double imag () const &#123; return im; &#125;
-private:
-double re, im;
-
-friend complex&amp; __doapl (complex *, const complex&amp;);
-friend complex&amp; __doami (complex *, const complex&amp;);
-friend complex&amp; __doaml (complex *, const complex&amp;);
-&#125;;
-</code></pre>
+<p>​    #endif  </p>
+<h3 id="类的声明"><a href="#类的声明" class="headerlink" title="类的声明"></a>类的声明</h3><p>​    class complex  &#x2F;&#x2F;class head<br>​    {<br>​    public:        &#x2F;&#x2F;class body<br>​    complex (double r &#x3D; 0, double i &#x3D; 0): re (r), im (i) { }<br>​    complex&amp; operator +&#x3D; (const complex&amp;);<br>​    complex&amp; operator -&#x3D; (const complex&amp;);<br>​    complex&amp; operator *&#x3D; (const complex&amp;);<br>​    complex&amp; operator &#x2F;&#x3D; (const complex&amp;);<br>​    double real () const { return re; }<br>​    double imag () const { return im; }<br>​    private:<br>​    double re, im;</p>
+<p>​    friend complex&amp; __doapl (complex *, const complex&amp;);<br>​    friend complex&amp; __doami (complex *, const complex&amp;);<br>​    friend complex&amp; __doaml (complex *, const complex&amp;);<br>​    };</p>
 <h3 id="模板的引出"><a href="#模板的引出" class="headerlink" title="模板的引出"></a>模板的引出</h3><p>对于复数来说，有整数型的实部虚部，还有浮点型的实部虚部。上面声明的是浮点数的类，所以为了适用所有的数据类型，引出了模板的使用。 </p>
-<pre><code>template&lt;typename T&gt;
-class compile
-&#123;
-    public:
-    ...
-    private:
-    T re,im;
-    ...
-&#125;
+<p>​    template<typename T><br>​    class compile<br>​    {<br>​        public:</p>
+<p>​        private:<br>​        T re,im;</p>
+<pre><code>&#125;
 </code></pre>
 <p>模板的使用如下：</p>
 <pre><code>&#123;
@@ -321,6 +305,13 @@ cout &lt;&lt; c1.real();
 cout &lt;&lt; c1.real();
 </code></pre>
 <p>创建对象的时候声明 c1的参数是不可以改变的，但是在complex类中如果没有加const就说明 re是可以修改的。所以编译的时候就会报错  </p>
+<h4 id="const-reference-和-non-const-reference"><a href="#const-reference-和-non-const-reference" class="headerlink" title="const reference 和 non-const reference"></a>const reference 和 non-const reference</h4><h5 id="const-reference"><a href="#const-reference" class="headerlink" title="const reference"></a>const reference</h5><p>const refernence 只可读不可写，可以绑定不同类型的const&#x2F;非const对象，或者不可寻址的值。如字面值常量。<strong>const引用只是表明，保证不会通过此引用改变被引用的对象，但是还可以通过其他方式来改变。编译器产生临时变量的时候引用必须为const</strong>  </p>
+<h5 id="non-const-reference"><a href="#non-const-reference" class="headerlink" title="non-const reference"></a>non-const reference</h5><p>非const引用可读也可写，必须绑定相同类型的非const对象。<br>实例如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">double a= 3.14;</span><br><span class="line">//下3行仅对const引用才是合法的</span><br><span class="line">const int &amp;b= 1024;</span><br><span class="line">const int &amp;c= a;</span><br><span class="line">const double &amp;d= a+ 1.0;//不可寻址</span><br></pre></td></tr></table></figure>
+<h4 id="右值引用"><a href="#右值引用" class="headerlink" title="右值引用"></a>右值引用</h4><p>左值（可在等号左边出现的元素）：具名对象、在栈数据段和堆数据段上分配的对象、其他对象的数据成员，或者一切具有确定存储范围的数据项。<br>右值:字面值和临时变量。<br>左值引用只可以绑定左值，不可以绑定右值。但是右值可以绑定到const 左值引用上。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int&amp; i = 1;//这是错误的 </span><br></pre></td></tr></table></figure>
+<p>右值引用:只与右值绑定的引用。通过 &amp;&amp; 进行申明。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int&amp;&amp; i = 1;</span><br></pre></td></tr></table></figure>
 <h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><ul>
 <li>pass by value:传递所有数据  </li>
 <li>pass by reference(引用):在底层就相当于传递指针 “&amp;”。这种速度比较快<br>（尽量传引用）</li>
@@ -426,6 +417,166 @@ return complex (x + real (y), imag (y));
 <li>以上的函数不可return by reference; 返回一个对象，对象在函数执行完毕之后分配的临时空间被释放。</li>
 <li>typename + ():创建临时对象。</li>
 </ul>
+<h1 id="三大函数：拷贝构造、拷贝赋值、析构"><a href="#三大函数：拷贝构造、拷贝赋值、析构" class="headerlink" title="三大函数：拷贝构造、拷贝赋值、析构"></a>三大函数：拷贝构造、拷贝赋值、析构</h1><h3 id="class的两个经典分类"><a href="#class的两个经典分类" class="headerlink" title="class的两个经典分类"></a>class的两个经典分类</h3><ul>
+<li>class without point</li>
+<li>class with point：如果class中有指针变量的成员函数，拷贝构造，拷贝赋值要自己定义；<br>  因为指针指向的时一个地址，要是拷贝构造和拷贝赋值用编译默认的，就会造成两个指针指向的时同一片内存空间，也就是浅拷贝<h3 id="拷贝构造"><a href="#拷贝构造" class="headerlink" title="拷贝构造"></a>拷贝构造</h3>新创建出来的对象。构造函数的参数是自身类型的引用，且任何额外参数都有默认值。这种构造函数就叫做拷贝构造；如下所示：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">String</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:                                 </span><br><span class="line"><span class="built_in">String</span>(<span class="type">const</span> <span class="type">char</span>* cstr=<span class="number">0</span>);                     </span><br><span class="line"><span class="built_in">String</span>(<span class="type">const</span> String&amp; str);                    </span><br><span class="line">String&amp; <span class="keyword">operator</span>=(<span class="type">const</span> String&amp; str);         </span><br><span class="line">~<span class="built_in">String</span>();                                    </span><br><span class="line"><span class="function"><span class="type">char</span>* <span class="title">get_c_str</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> m_data; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"><span class="type">char</span>* m_data;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>如下就是深拷贝：将所有内容都进行拷贝</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span></span></span><br><span class="line"><span class="function"><span class="title">String::String</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* cstr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">if</span> (cstr) &#123;</span><br><span class="line">    m_data = <span class="keyword">new</span> <span class="type">char</span>[<span class="built_in">strlen</span>(cstr)+<span class="number">1</span>];</span><br><span class="line">    <span class="built_in">strcpy</span>(m_data, cstr);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;   </span><br><span class="line">    m_data = <span class="keyword">new</span> <span class="type">char</span>[<span class="number">1</span>];</span><br><span class="line">    *m_data = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="移动构造函数"><a href="#移动构造函数" class="headerlink" title="移动构造函数"></a>移动构造函数</h3><p>移动构造函数：将资源从给定对象移动（不是复制）到正在创建的对象。<br>拷贝和移动构造函数定义了当用同一类型的另外一个对象初始化本对象时做什么<br>为了让我们自己的类支持移动操作，需要为其定义移动构造函数和移动复制运算符 。</p>
+<h4 id="移动构造函数-1"><a href="#移动构造函数-1" class="headerlink" title="移动构造函数"></a>移动构造函数</h4><ul>
+<li>类似拷贝构造函数，移动构造函数的一个参数是该类型的一个右值引用。与拷贝狗咱函数一样，任何额外的参数都必须有默认实参。</li>
+<li>移动构造函数还必须确保移动后源对象处于销毁后是无害的状态。移动后这些对象的所有权已经归属新创建的对象。 </li>
+<li>与拷贝构造函数不同，移动构造函数不分配任何新内存，它接管原来对象中的内存。在接管内存之后，它将给定对象中的指针置零。<br>下面我们为类StrVecc类 定义移动构造函数。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">StrVec::Strvec(Strvec &amp;&amp;s) noexcept//移动操作不应该抛出任何异常</span><br><span class="line">: elements(s.elements),first_free(s.first_free),cap(s.cap)</span><br><span class="line">&#123;</span><br><span class="line">    s.elements = s.first_free = s.cap = nullptr;</span><br><span class="line">    //在接管内存之后，将给定对象中德指针都置为nullptr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="拷贝赋值"><a href="#拷贝赋值" class="headerlink" title="拷贝赋值"></a>拷贝赋值</h3><p>操作符重载“&#x3D;”，还是同一类对象。这种操作就叫做拷贝赋值。如下：</p>
+<pre><code>String&amp; operator=(const String&amp; str); 
+
+    String&amp; String::operator=(const String&amp; str)
+&#123;
+if (this == &amp;str)
+    return *this;
+
+delete[] m_data;
+m_data = new char[ strlen(str.m_data) + 1 ];
+strcpy(m_data, str.m_data);
+return *this;
+&#125; 
+complex s1(&quot;hello&quot;);
+complex s2(s1);//这里用到了拷贝构造
+s2 = s1;//这里用到了拷贝赋值
+因为“=”操作符重载，等号左边是操作对象等号右边是被操作的对象。所以操作符重载中this 是等号左边的对象。在拷贝赋值中分以下爱几个步骤：
+1. 删除自身数据。
+2. 创建足够大的空间
+3. 进行拷贝操作。
+注意在起手就要进行检测自我赋值：浅拷贝之后不能进行自身的拷贝赋值。因为操作的是同一片地址空间，然而拷贝赋值第一步是delete。
+</code></pre>
+<h3 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h3><p>当销毁对象时，析构函数就会被调用；如下</p>
+<pre><code>~String(); 
+    inline
+String::~String()
+&#123;
+delete[] m_data;
+&#125;
+</code></pre>
+<h1 id="堆，栈以及内存管理"><a href="#堆，栈以及内存管理" class="headerlink" title="堆，栈以及内存管理"></a>堆，栈以及内存管理</h1><h3 id="stack栈"><a href="#stack栈" class="headerlink" title="stack栈"></a>stack栈</h3><p>是存在于作用域的一块内存空间，当调用函数的时候函数本身即会形成一个stack用来放置它所接收的参数，在函数执行完毕离开作用域后，空间释放。</p>
+<h3 id="heap-堆"><a href="#heap-堆" class="headerlink" title="heap 堆"></a>heap 堆</h3><p>是指由操作系统提供的一块全局内存空间，程序可动态分配这块内存。</p>
+<h3 id="new"><a href="#new" class="headerlink" title="new"></a>new</h3><p>先分配空间，再执行对象的构造函数来创建对象。</p>
+<h3 id="delect"><a href="#delect" class="headerlink" title="delect"></a>delect</h3><p>先调用对象的析构函数，在释放分配的 内存空间  </p>
+<h1 id="类模板"><a href="#类模板" class="headerlink" title="类模板"></a>类模板</h1><h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><p>data member<br>static data member :经过static修饰过的成员变量不属于此对象了。这个变量会被放在一个静态存储区。成员函数也是这样。<br>静态成员变量使用的情景如下：</p>
+<pre><code>银行所有账户的利率应该使用的是同一份利率。所以利率用一个静态成员变量来表示
+</code></pre>
+<p>static member functions:因为静态成员函数不属于对象，函数会被放在一个单独的静态存储区，所有静态成员函数没有this指针。所以只能处理静态变量的数据<br>例：</p>
+<pre><code>class Account&#123;
+    public:
+        static double m_rate;
+        static void set_rate(const double &amp;x)&#123;m_rate = x&#125;;
+&#125;
+double Account::m_rate = 8.0;
+int main()
+&#123;
+    Account::set_name(5.0);
+    Account a;
+    a.set_rate(7.0);
+&#125;
+</code></pre>
+<ul>
+<li><p>静态成员变量需要在类的外面进行进行初始化（定义）</p>
+</li>
+<li><p>调用静态成员函数的两个方式：<br>  1.通过对象调用<br>  2.通过class name 调用  </p>
+<h3 id="将构造函数放到private中"><a href="#将构造函数放到private中" class="headerlink" title="将构造函数放到private中"></a>将构造函数放到private中</h3><p>这是一个设计模式，只允许产生一个对象。如下  </p>
+<p>  class A{<br>  public:<br>  static A&amp; getInstance(return a);<br>  private:<br>  A();<br>  A(const A&amp; rhs);<br>  static A a;<br>  }</p>
+</li>
+</ul>
+<h3 id="类模板-1"><a href="#类模板-1" class="headerlink" title="类模板"></a>类模板</h3><pre><code>    template&lt;typename T&gt;  
+    class complex
+    &#123;
+        public:
+        ...
+        private:
+        T re,im;
+        ...
+    &#125;
+
+    complex&lt;double&gt; c1(2.5,1.5); 
+</code></pre>
+<h3 id="函数模板"><a href="#函数模板" class="headerlink" title="函数模板"></a>函数模板</h3><pre><code>template&lt;typename T&gt;  
+inline T&amp; min(const T&amp; a, const T&amp; b)
+&#123;
+    return b &lt; a ? b : a;  //对&lt;进行操作符重载
+&#125;
+</code></pre>
+<p>函数模板在使用时不必指定T为什么种类的数据类型，如下：</p>
+<pre><code>stone r1(2,3),r2(3,3),r3;
+r3 = min(r1, r2);
+</code></pre>
+<p>编译器会对函数模板进行参数推导  </p>
+<h3 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h3><pre><code>namespace std
+&#123;
+
+&#125;
+</code></pre>
+<p>使用方法 </p>
+<ol>
+<li><p>使用命令的形式 using directive</p>
+<pre><code> using namespace std;
+ ...
+</code></pre>
+</li>
+<li><p>直接使用 using declaration</p>
+<pre><code> using std::cout;
+</code></pre>
+<p> 或者</p>
+<pre><code> std::cin&lt;&lt;...;
+</code></pre>
+</li>
+</ol>
+<h1 id="组合和继承"><a href="#组合和继承" class="headerlink" title="组合和继承"></a>组合和继承</h1><h3 id="composition（复合）"><a href="#composition（复合）" class="headerlink" title="composition（复合）"></a>composition（复合）</h3><p>类中有另外一个对象（底层容器）这种结构叫做复合。</p>
+<h3 id="复合关系下的构造和析构函数"><a href="#复合关系下的构造和析构函数" class="headerlink" title="复合关系下的构造和析构函数"></a>复合关系下的构造和析构函数</h3><ul>
+<li>构造函数由内到外  </li>
+<li>析构函数由外到内  <h3 id="委托-Delegation-x2F-composition-by-reference"><a href="#委托-Delegation-x2F-composition-by-reference" class="headerlink" title="委托 Delegation &#x2F; composition by reference"></a>委托 Delegation &#x2F; composition by reference</h3>类中有另外一个对象的指针，这种关系叫做委托(Delegation &#x2F; composition by reference)  <h3 id="Handle-x2F-Body-pImpI-模式"><a href="#Handle-x2F-Body-pImpI-模式" class="headerlink" title="Handle &#x2F;Body (pImpI) 模式"></a>Handle &#x2F;Body (pImpI) 模式</h3>  class String{<br>  public:<br>  String();<br>  String(const char <em>s);<br>  ~String();<br>  private:<br>      StringRep</em> rep;<br>  }<br>  class StringRep{<br>  …<br>  }</li>
+</ul>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><ul>
+<li>构造由内到外</li>
+<li>析构由外到内</li>
+</ul>
+<p>语法：<br>例如 Quote是基类，Bulk_quote是派生类</p>
+<pre><code>class Bulk_quote : public Quote&#123;
+
+&#125;
+Bulk_quote继承了Quote
+子类可以调用父类的函数
+</code></pre>
+<h1 id="虚函数与多态"><a href="#虚函数与多态" class="headerlink" title="虚函数与多态"></a>虚函数与多态</h1><ul>
+<li>非虚函数  non-virtual：不希望派生类重新定义基类 </li>
+<li>虚函数 virtual：希望派生类重新定义基类 ，它已经有了默认定义</li>
+<li>纯虚函数 pure virtual: 派生类一定要重新定义基类 ，它没有默认定义</li>
+</ul>
+<p>在应用的时候，纯虚函数一般是要父类不能去定义，只能子类去定义的情形。 </p>
+<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p>reference 一定要有一个初值，如下：  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> &amp;  r = x;</span><br></pre></td></tr></table></figure>
+<p>引用是不可以变化的，如上所示 r不可以再代表另外一个变量。</p>
+<h1 id="lambda函数"><a href="#lambda函数" class="headerlink" title="lambda函数"></a>lambda函数</h1><p>lambda函数：若某表达式需要一个函数，则可以等到所需之处才进行定义 。</p>
+<h2 id="lambda匿名函数的定义"><a href="#lambda匿名函数的定义" class="headerlink" title="lambda匿名函数的定义"></a>lambda匿名函数的定义</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[外部变量访问方式说明符] (参数) mutable noexcept/throw() -&gt; 返回值类型</span><br><span class="line">&#123;</span><br><span class="line">   函数体;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>[外部变量访问方式说明符]：不能省略<br> [ ] 方括号用于向编译器表明当前是一个 lambda 表达式，其<strong>不能被省略</strong>。在方括号内部，可以注明当前 lambda 函数的函数体中可以使用哪些“外部变量”  </p>
+</li>
+<li><p>(参数)  ：可以省略<br> 和普通函数的定义一样，lambda 匿名函数也可以接收外部传递的多个参数。和普通函数不同的是，如果不需要传递参数，可以连同 () 小括号一起省略  </p>
+</li>
+<li><p>mutable：可以省略<br> 此关键字可以省略，如果使用则之前的 () 小括号将不能省略（参数个数可以为 0）。默认情况下，对于以值传递方式引入的外部变量，不允许在 lambda 表达式内部修改它们的值（可以理解为这部分变量都是 const 常量）。而如果想修改它们，就必须使用 mutable 关键字。<br> <strong>注意，对于以值传递方式引入的外部变量，lambda 表达式修改的是拷贝的那一份，并不会修改真正的外部变量</strong>  </p>
+</li>
+<li><p>noexcept&#x2F;throw() ：可以省略<br> 可以省略，如果使用，在之前的 () 小括号将不能省略（参数个数可以为 0）。默认情况下，lambda 函数的函数体中可以抛出任何类型的异常。而标注 noexcept 关键字，则表示函数体内不会抛出任何异常；使用 throw() 可以指定 lambda 函数内部可以抛出的异常类型。  </p>
+</li>
+<li><p>-&gt; 返回值类型  ：可以省略<br> 指明 lambda 匿名函数的返回值类型。值得一提的是，如果 lambda 函数体内只有一个 return 语句，或者该函数返回 void，则编译器可以自行推断出返回值类型，此情况下可以直接省略-&gt; 返回值类型  </p>
+</li>
+<li><p>函数体  ：不可以省略<br> 和普通函数一样，lambda 匿名函数包含的内部代码都放置在函数体中。该函数体内除了可以使用指定传递进来的参数之外，还可以使用指定的外部变量以及全局范围内的所有全局变量<br> <strong>需要注意的是，外部变量会受到以值传递还是以引用传递方式引入的影响，而全局变量则不会。换句话说，在 lambda 表达式内可以使用任意一个全局变量，必要时还可以直接修改它们的值。</strong></p>
+</li>
+</ol>
+<h2 id="lambda函数的使用"><a href="#lambda函数的使用" class="headerlink" title="lambda函数的使用"></a>lambda函数的使用</h2><h3 id="定义一个最简单的匿名函数"><a href="#定义一个最简单的匿名函数" class="headerlink" title="定义一个最简单的匿名函数"></a>定义一个最简单的匿名函数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[]&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="lambda匿名函数中的-外部变量"><a href="#lambda匿名函数中的-外部变量" class="headerlink" title="lambda匿名函数中的[外部变量]"></a>lambda匿名函数中的[外部变量]</h3><p><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/lambda.png?raw=true" alt="image">  </p>
+<h3 id="调用方法"><a href="#调用方法" class="headerlink" title="调用方法"></a>调用方法</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">func_1</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> a=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">auto</span> func_lambda_1=[] (<span class="type">const</span> <span class="type">int</span> i) &#123;cout&lt;&lt;i&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;endl;&#125;;  <span class="comment">//创建一个lambda表达式</span></span><br><span class="line">    <span class="built_in">func_lambda_1</span>(a);                                           <span class="comment">//调用func_lambda_1,传入参数a；</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
     </div>
 

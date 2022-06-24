@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="title: C++标准库与泛型编程categories: C++    分析C++标准库的学习C++标准库的header files 不带.h 例如 #include记两个学习网站： 1231. www.CPlusPlus.com2. cppreference.com 3. gcc.gnu.org">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2022/06/24/STL/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title: C++标准库与泛型编程categories: C++    分析C++标准库的学习C++标准库的header files 不带.h 例如 #include记两个学习网站： 1231. www.CPlusPlus.com2. cppreference.com 3. gcc.gnu.org">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/%E6%9C%AA%E5%91%BD%E5%90%8D%E7%BB%98%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/vector1.png?raw=true">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/Deque.png?raw=true">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/List.png?raw=true">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/Forward-List.png?raw=true">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/%E5%8F%AF%E6%9B%B4%E6%94%B9%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8.png?raw=true">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/%E7%AA%97%E5%8F%A3%E8%BE%93%E5%85%A5.png?raw=true">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/copy_Ioiter.png?raw=true">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/reverseIterstor.png?raw=true">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/%E9%80%9A%E7%94%A8%E6%93%8D%E4%BD%9C.png?raw=true">
+<meta property="og:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/%E9%80%9A%E7%94%A8%E6%93%8D%E4%BD%9C2.png?raw=true">
+<meta property="article:published_time" content="2022-06-24T14:14:22.919Z">
+<meta property="article:modified_time" content="2022-06-24T14:14:22.927Z">
+<meta property="article:author" content="赵博">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/zb-zc/PictureWareHouse/blob/main/%E6%9C%AA%E5%91%BD%E5%90%8D%E7%BB%98%E5%9B%BE.png?raw=true">
+
+
+<link rel="canonical" href="http://example.com/2022/06/24/STL/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/06/24/STL/","path":"2022/06/24/STL/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | Hexo</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录每一次成长</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">0</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">3</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">15</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#STL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">STL体系结构基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#STL-%E5%85%AD%E5%A4%A7%E9%83%A8%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">STL 六大部件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8-containers"><span class="nav-number">1.1.1.</span> <span class="nav-text">容器  (containers)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84%E4%BB%A5%E5%8F%8A%E5%88%86%E7%B1%BB"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">容器结构以及分类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%BC%8F%E5%AE%B9%E5%99%A8-sequence-containers-%E5%8C%85%E6%8B%AC%E4%BB%A5%E4%B8%8B%E5%87%A0%E7%A7%8D"><span class="nav-number">1.1.1.1.1.</span> <span class="nav-text">序列式容器 sequence containers: 包括以下几种</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8-Associative-Containers-%E9%80%82%E5%90%88%E4%BA%8E%E8%A6%81%E5%A4%A7%E9%87%8F%E6%9F%A5%E6%89%BE%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.1.1.2.</span> <span class="nav-text">关联式容器  Associative Containers: 适合于要大量查找的数据</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%BC%8F%E4%BB%A5%E5%8F%8A%E6%97%A0%E5%BA%8F%E5%BC%8F%E5%AE%B9%E5%99%A8%E7%9A%84%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.1.1.1.2.1.</span> <span class="nav-text">关联式以及无序式容器的实例</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8D%E5%AE%9A%E5%BA%8F%E5%AE%B9%E5%99%A8"><span class="nav-number">1.1.1.1.3.</span> <span class="nav-text">不定序容器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%B9%E5%99%A8-vector"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">使用容器 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.1.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8D%E5%B8%A6%E5%8F%82%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.1.2.2.</span> <span class="nav-text">不带参数的定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%A6%E5%8F%82%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.1.2.3.</span> <span class="nav-text">带参数的定义</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reverse"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">reverse()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%BA%E9%97%B4-range"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">区间(range)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E9%87%8D%E5%8C%BA%E9%97%B4"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">多重区间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.1.1.6.</span> <span class="nav-text">迭代器种类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B9%8B%E9%80%82%E9%85%8D%E5%99%A8-Container-Adapter"><span class="nav-number">1.1.2.</span> <span class="nav-text">迭代器之适配器 (Container Adapter)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Insert-Iterator-%E5%AE%89%E6%8F%92%E5%9E%8B%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Insert Iterator 安插型迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Stream-Iterator-%E4%B8%B2%E6%B5%81%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">Stream Iterator 串流迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reverse-Itreator-%E5%8F%8D%E5%90%91%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.1.2.3.</span> <span class="nav-text"> Reverse Itreator 反向迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Move-Iterator-%E6%90%AC%E7%A7%BB%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">Move Iterator 搬移迭代器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BF%E5%87%BD%E5%BC%8F-Functor"><span class="nav-number">1.1.3.</span> <span class="nav-text">仿函式 (Functor)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OOP-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E5%92%8CGP-%E6%B3%9B%E6%80%A7%E7%BC%96%E7%A8%8B-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">OOP(面向对象)和GP(泛性编程)的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OOP"><span class="nav-number">2.1.</span> <span class="nav-text">OOP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GP"><span class="nav-number">2.2.</span> <span class="nav-text">GP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%9A%84%E5%85%B1%E9%80%9A%E8%83%BD%E5%8A%9B%E5%92%8C%E5%85%B1%E5%90%8C%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">容器的共通能力和共同操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%9A%84%E5%85%B1%E9%80%9A%E8%83%BD%E5%8A%9B"><span class="nav-number">3.1.</span> <span class="nav-text">容器的共通能力</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%9A%84%E5%85%B1%E9%80%9A%E6%93%8D%E4%BD%9C"><span class="nav-number">3.1.1.</span> <span class="nav-text">容器的共通操作</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">赵博</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/24/STL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="赵博">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-24 22:14:22" itemprop="dateCreated datePublished" datetime="2022-06-24T22:14:22+08:00">2022-06-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <hr>
+<p>title: C++标准库与泛型编程<br>categories: C++  </p>
+<hr>
+<p>分析C++标准库的学习<br>C++标准库的header files 不带.h 例如 #include<vector><br>记两个学习网站：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. www.CPlusPlus.com</span><br><span class="line">2. cppreference.com </span><br><span class="line">3. gcc.gnu.org</span><br></pre></td></tr></table></figure>
+<span id="more"></span>    
+<h1 id="STL体系结构基础"><a href="#STL体系结构基础" class="headerlink" title="STL体系结构基础"></a>STL体系结构基础</h1><h2 id="STL-六大部件"><a href="#STL-六大部件" class="headerlink" title="STL 六大部件"></a>STL 六大部件</h2><h3 id="容器-containers"><a href="#容器-containers" class="headerlink" title="容器  (containers)"></a>容器  (containers)</h3><h4 id="容器结构以及分类"><a href="#容器结构以及分类" class="headerlink" title="容器结构以及分类"></a>容器结构以及分类</h4><h5 id="序列式容器-sequence-containers-包括以下几种"><a href="#序列式容器-sequence-containers-包括以下几种" class="headerlink" title="序列式容器 sequence containers: 包括以下几种"></a>序列式容器 sequence containers: 包括以下几种</h5><ol>
+<li>Array:将数组包装成一个类，如下：<br><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/%E6%9C%AA%E5%91%BD%E5%90%8D%E7%BB%98%E5%9B%BE.png?raw=true" alt="image">  </li>
+<li>Vector: 向量 将数据放入时会自动扩充。如下：<br><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/vector1.png?raw=true" alt="image">  </li>
+<li>Deque: 双向队列，数据可以从两端进入<br><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/Deque.png?raw=true" alt="image">  </li>
+<li>List: 双向链表<br><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/List.png?raw=true" alt="image">  </li>
+<li>Forward-List: 单向链表<br><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/Forward-List.png?raw=true" alt="image"></li>
+</ol>
+<h5 id="关联式容器-Associative-Containers-适合于要大量查找的数据"><a href="#关联式容器-Associative-Containers-适合于要大量查找的数据" class="headerlink" title="关联式容器  Associative Containers: 适合于要大量查找的数据"></a>关联式容器  Associative Containers: 适合于要大量查找的数据</h5><pre><code>分为set以及Map。
+set是Key以及Value相同
+Map是Key和Value一一对应的   
+</code></pre>
+<h6 id="关联式以及无序式容器的实例"><a href="#关联式以及无序式容器的实例" class="headerlink" title="关联式以及无序式容器的实例"></a>关联式以及无序式容器的实例</h6><h5 id="不定序容器"><a href="#不定序容器" class="headerlink" title="不定序容器"></a>不定序容器</h5><h4 id="使用容器-vector"><a href="#使用容器-vector" class="headerlink" title="使用容器 vector"></a>使用容器 vector</h4><h5 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h5><p>容器vector是一个向量式的容器。使用式需要包含头文件 <code>#include&lt;vector&gt;</code>  </p>
+<h5 id="不带参数的定义"><a href="#不带参数的定义" class="headerlink" title="不带参数的定义"></a>不带参数的定义</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义了一个int类型的容器</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; v1;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义了一个double类型的容器</span></span><br><span class="line">vector&lt;<span class="type">double</span>&gt; v2;</span><br></pre></td></tr></table></figure>
+<h5 id="带参数的定义"><a href="#带参数的定义" class="headerlink" title="带参数的定义"></a>带参数的定义</h5><ol>
+<li>定义了一个int类型的容器,定义时指定给他分配十个元素的空间   <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 定义了一个int类型的容器,定义时指定给他分配十个元素的空间</span></span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">v1</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    ```  </span><br><span class="line">    默认<span class="number">10</span>个元素都是零值</span><br><span class="line"><span class="number">2.</span> 定义时指定<span class="number">10</span>个元素的内存，同时给所有元素赋值<span class="number">666</span>  </span><br><span class="line">    ```C++ </span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">v3</span><span class="params">(<span class="number">10</span>, <span class="number">666</span>)</span></span>;</span><br><span class="line">    ```  </span><br><span class="line"><span class="number">3.</span> 定义时可以使用其他容器来初始化自己  </span><br><span class="line">    ```C++ </span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">v1</span><span class="params">(<span class="number">5</span>, <span class="number">666</span>)</span></span>;</span><br><span class="line">    <span class="comment">// 定义时可以使用其他容器来初始化自己</span></span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">v2</span><span class="params">(v1)</span></span>;	<span class="comment">// v1 和 v2 相等</span></span><br><span class="line">    <span class="comment">//这里会调用拷贝构造函数</span></span><br><span class="line"></span><br><span class="line">    ```  </span><br><span class="line">**用法参考如下博客**  `https:<span class="comment">//blog.csdn.net/cpp_learner/article/details/104589416`  </span></span><br><span class="line">### 分配器(Allocator)</span><br><span class="line">    分配管理容器里面数据的内存空间</span><br><span class="line">### 算法（Algorithms） </span><br><span class="line">为了处理容器内的元素，STL提供了一些标准算法，包括查找、排序、拷贝、重新排序、修改、数值运算等基本而普遍的算法</span><br><span class="line">**为了能够调用算法，首先必须包含头文件 ＜algorithm＞**  </span><br><span class="line">#### min_element和max_element  </span><br><span class="line">作用(返回值)： 返回范围内的最小和最大的元素。</span><br><span class="line">方法： 调用它们时必须传入两个实参，定义出欲处理的元素范围。  </span><br><span class="line">实参：  如果想处理容器内所有元素，可使用 ```cbegin（） ```和 ```cend（）```，或```begin（）```和```end（）``` 如下所示  </span><br></pre></td></tr></table></figure>
+auto minpos &#x3D; min_element(coll.cbegin(),coll.cend());  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">以下语句打印出该元素  </span><br></pre></td></tr></table></figure>
+cout &lt;&lt; “min: “ &lt;&lt; *minpos &lt;&lt; endl;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#### sort()  </span><br><span class="line">它将“由两个实参指出来”的区间内的所有元素加以排序。你可以（选择性地）传入一个排序准则，默认使用operator＜。因此，本例容器内的所有元素以递增方式排列.如下所示：  </span><br></pre></td></tr></table></figure>
+sort(coll.begin(),coll.endl);  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">排序后的容器元素次序如下:  </span><br></pre></td></tr></table></figure>
+1 2 3 4 5 6 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">**这里不可使用cbegin（）和cend（），因为sort（）会改动元素的value，但const_iterator不允许如此**</span><br><span class="line">#### find()</span><br><span class="line">返回一个迭代器指向目标元素。如果失败，返回第二实参所指示的区间末端。如下所示：  </span><br><span class="line">```  </span><br><span class="line">如果find（）成功，返回一个迭代器指向目标元素。如果失败，返回第二实参所指示的区间末端</span><br><span class="line">auto pos3 = find(coll.begin(),coll.end(),3);</span><br><span class="line">如果find（）成功，返回一个迭代器指向目标元素。如果失败，返回第二实参所指示的区间末端</span><br></pre></td></tr></table></figure>
+<h4 id="reverse"><a href="#reverse" class="headerlink" title="reverse()"></a>reverse()</h4>作用： 将区间内的元素反转放置  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reserve(pos3,coll.end());  </span><br><span class="line">由于这是一种改动，我们必须使用一个非常量迭代器。</span><br></pre></td></tr></table></figure>
+程序输出如下：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 2 6 5 4 3</span><br></pre></td></tr></table></figure>
+<h4 id="区间-range"><a href="#区间-range" class="headerlink" title="区间(range)"></a>区间(range)</h4><ul>
+<li><p>所有算法处理的都是半开区，包括起始元素的位置但不包括末尾元素的位置。</p>
+</li>
+<li><p>如果使用find（）获取某个子集的第一和最后元素，必须考虑一点：半开区间并不包含最后一个元素  </p>
+<h4 id="多重区间"><a href="#多重区间" class="headerlink" title="多重区间"></a>多重区间</h4></li>
+<li><p>有数个算法可以（或说需要）同时处理多重区间。 通常你必须设定第一个区间的起点和终点，至于其他区间，只需设定起点即可，终点通常可由第一区间的元素数量推导出来。  </p>
+</li>
+<li><p>如果某个算法用来处理多重区间，那么当你调用它时，务必确保第二（以及其他）区间所拥有的元素个数至少和第一区间内的元素个数相同<br>如下所示： </p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">    if(equal(coll1.begin(),coll.end(),coll2.began()))&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ```  </span><br><span class="line"></span><br><span class="line">### 迭代器  (Iterator)</span><br><span class="line">#### 迭代器的基本操作 </span><br><span class="line">1. 算法和容器之间的桥梁 ,以一个对象表现出容器元素的位置。这样的概念的确存在。实践这个概念的对象就是所谓的迭代器（iterator）.以一个对象表现出容器元素的位置。这样的概念的确存在。实践这个概念的对象就是所谓的迭代器（iterator）</span><br><span class="line">**range-based for statement (since C++11 ) 基于范围的声明**</span><br><span class="line">  </span><br><span class="line">    语法：  </span><br><span class="line"></span><br><span class="line">        for(decl : coll)&#123;</span><br><span class="line">            statement</span><br><span class="line">        &#125;</span><br><span class="line">        //decl 申明  </span><br><span class="line">        //coll 容器</span><br><span class="line">    如下：</span><br><span class="line"></span><br><span class="line">        int main()&#123;</span><br><span class="line">        for(int i : &#123;1,2,3,4,5,6,7,8&#125;)&#123;</span><br><span class="line">            cout&lt;&lt;i&lt;&lt;endl;</span><br><span class="line">        &#125;</span><br><span class="line">        &#125; </span><br><span class="line">2. 迭代器是一个“可遍历STL容器全部或部分元素”的对象。迭代器用来表现容器中的某一个位置。基本操作如下: </span><br><span class="line"> * Operator＊返回当前位置上的元素值。如果该元素拥有成员，你可以通过迭代器直接以操作符-＞取用它们。</span><br><span class="line">* Operator++令迭代器前进至下一元素。大多数迭代器还可使用operator--退前一元素。</span><br><span class="line">* Operators==和！=判断两个迭代器是否指向同一位置。· Operator=对迭代器赋值（也就是指明迭代器所指向的元素的位置  </span><br><span class="line">**所以再容器中使用&lt;等其他符号要慎重，并不是所有的容器都支持operators&lt;**</span><br><span class="line">3. 所有容器类都提供一些基本的成员函数，使我们得以取得迭代器并以之遍历所有元素。这些函数中最重要的是  </span><br><span class="line">* begin（）返回一个迭代器，指向容器起点，也就是第一元素（如果有的话）的位置。</span><br><span class="line">* end（）返回一个迭代器，指向容器终点。终点位于最末元素的下一位置，这样的迭代器又称作“逾尾（past-the-end）”迭代器。</span><br><span class="line">4. 下面这个例子示范了迭代器的用法，将list容器的所有元素打印出来  </span><br><span class="line">    ![image](https://github.com/zb-zc/PictureWareHouse/blob/main/%E8%BF%AD%E4%BB%A3%E5%99%A8.png?raw=true)  </span><br><span class="line">    迭代器pos被声明于循环之前，其类型是“指向容器内的常量元素”的迭代器  </span><br><span class="line">    ```C++</span><br><span class="line">    list&lt;char&gt;::const_iterator pos;</span><br></pre></td></tr></table></figure>
+<p>  任何容器都定义有两种迭代器类型  </p>
+<ul>
+<li>container：：iterator以“读&#x2F;写”模式遍历元素。</li>
+<li>const_iterator：：const_iterator以“只读”模式遍历元素</li>
+</ul>
+<p>  上述循环中，迭代器pos以容器的第一元素的位置为初值：<br>  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pos = coll.<span class="built_in">begin</span>();</span><br></pre></td></tr></table></figure><br>  循环不断进行，只要pos尚未到达容器终点：<br>  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pos != coll.<span class="built_in">end</span>();</span><br><span class="line">这里的pos是与“逾尾（past-the-end）”迭代器做比较。当循环内部执行++pos语句，迭代器pos就会前进至下一元素。</span><br></pre></td></tr></table></figure><br>  总而言之，pos从第一元素开始，逐次访问每一个元素，直到抵达终点为止）。如果容器内没有任何元素，coll.begin（）等于coll.end（），循环根本不会执行。</p>
+</li>
+</ul>
+<p>在循环内部，*pos代表当前（current）元素。<br>    <strong>如果你采用非常量（nonconstant）迭代器，而且元素本身的类型也是非常量（nonconstant），就可以通过迭代器来改变元素值</strong><br>    <img src="https://github.com/zb-zc/PictureWareHouse/blob/main/%E5%8F%AF%E6%9B%B4%E6%94%B9%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8.png?raw=true" alt="image"><br>5. 如果我们使用迭代器遍历（unordered） map和multimap的元素，pos会指向key&#x2F;valuepair。那么表达式<br>    <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pos-&gt;second</span><br></pre></td></tr></table></figure><br>    取得key&#x2F;value pair的第二成分，也就是元素的value。而表达式<br>     <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">    pos-&gt;first</span><br><span class="line">    ```   </span><br><span class="line">    会取得其（constant） key   </span><br><span class="line"><span class="number">6.</span> ```++pos vs.pos++```</span><br><span class="line">这里使用前置式递增（preincrement），因为它比后置式递增（postincrement）效率高。后者内部需要一个临时对象，因为它必须存放迭代器的原本位置并返回之，所以一般情况下最好使用++pos，不要用pos++</span><br><span class="line"><span class="number">7.</span> ```cbegin（）和cend（）```</span><br><span class="line">* 自C++<span class="number">11</span>开始，我们可以使用关键字 <span class="keyword">auto</span>代替迭代器的精确类型（前提是你在迭代器声明期间就初始化，使其类型可以取决于初值）。因此如果我们直接以begin（）初始化迭代器，就可以使用<span class="keyword">auto</span>声明其类型,如下所示：  </span><br><span class="line"></span><br><span class="line">    ```C++</span><br><span class="line">    <span class="keyword">auto</span> pos = coll.<span class="built_in">begin</span>();  </span><br><span class="line">    ```  </span><br><span class="line">* 但是这样会使pos成为一个非常量迭代器，此乃因为begin（）返回的是个类型为cont：：iterator的对象    </span><br><span class="line">* 为确保仍可使用常量迭代器，自C++<span class="number">11</span>起容器提供```cbegin（）和cend（）```，它们返回一个类型为```cont：：const_iterator```的对象。 它们返回一个类型为```cont：：const_iterator```的对象。  </span><br><span class="line"><span class="number">8.</span> **总结如下**  </span><br><span class="line">一个允许“迭代容器内所有元素”的循环如果不使用range-based <span class="keyword">for</span>循环，看起来应如下： </span><br><span class="line">```C++</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> pos = coll.<span class="built_in">cbegin</span>(); pos != coll.<span class="built_in">cend</span>();++pos)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="迭代器种类"><a href="#迭代器种类" class="headerlink" title="迭代器种类"></a>迭代器种类</h4><p>根据能力的不同，迭代器被划分为五种不同类别。STL预先定义好的所有容器，其迭代器均属于以下三种分类  </p>
+<ol>
+<li>前向迭代器（Forward iterator） 只能够以累加操作符（increment operator）向前迭代。Class forward_list的迭代器就属此类 </li>
+<li>双向迭代器（Bidirectional iterator）顾名思义它可以双向行进：以递增（increment）运算前进或以递减（decrement）运算后退。list、set、multiset、map和multimap提供的迭代器都属此类。</li>
+<li>随机访问迭代器（Random-accessiterator） 它不但具备双向迭代器的所有属性，还具备随机访问能力。更明确地说，它们提供了迭代器算术运算的必要操作符（和寻常指针的算术运算完全对应）。你可以对迭代器增加或减少一个偏移量、计算两迭代器间的距离，或使用 ＜和 ＞之类的relational（相对关系）操作符进行比较。vector、deque、array和string提供的迭代器都属此类</li>
+</ol>
+<p><strong>除此之外，STL还定义了两个类别</strong>   </p>
+<ul>
+<li>输入型迭代器（Input iterator）向前迭代时能够读取&#x2F;处理value。Input stream迭代器就是这样一个例子  </li>
+<li>输出型迭代器（Output iterator）向前迭代时能够涂写value。Inserter和output stream迭代器都属此类。</li>
+</ul>
+<h3 id="迭代器之适配器-Container-Adapter"><a href="#迭代器之适配器-Container-Adapter" class="headerlink" title="迭代器之适配器 (Container Adapter)"></a>迭代器之适配器 (Container Adapter)</h3><p>C++标准库提供了数个预定义的特殊迭代器，亦即所谓迭代器适配器（iterator adapter）。  </p>
+<h4 id="Insert-Iterator-安插型迭代器"><a href="#Insert-Iterator-安插型迭代器" class="headerlink" title="Insert Iterator 安插型迭代器"></a>Insert Iterator 安插型迭代器</h4><ul>
+<li>迭代器适配器的第一个例子是insertiterator，或称inserter。它可以使算法以安插（insert）方式而非覆写（overwrite）方式运作。  </li>
+<li>Insert iterator内部将接口做了新的定义</li>
+</ul>
+<ol>
+<li>Back inserter （安插于容器最末端） 其内部调用 push_back（），在容器末端插入元素（此即“追加”动作），如下所示：   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    copy(coll1.cbegin(),coll1.cend(),back_inserter(coll2));</span><br><span class="line">    //coll1的所有元素都会被附加到coll2中</span><br><span class="line">    ```  </span><br><span class="line">    只有在提供有push_back（）的容器中back inserter才能派上用场。在C++标准库中这样的容器有vector、deque、list和string  </span><br><span class="line">2. Front inserter（安插于容器最前端）其内部调用push_front（），将元素安插于容器最前端。如下所示：  </span><br></pre></td></tr></table></figure>
+ copy(coll1.cbegin(),coll1.cend(),front_inserter(coll2));<br> &#x2F;&#x2F;coll1的所有元素都会被附加到coll2中<br> &#x2F;&#x2F;注意，这种动作反转了被安插元素的次序。如果你先安插1，再向前安插2，那么1会排列在2的后面<br> &#96;&#96;&#96;<br>Front inserter只能用于提供有push_front（）的容器，在C++标准库中这样的容器是deque、list和forward_list。  </li>
+<li>General inserte  简称inserter:它的作用是在“初始化时接受之第二实参”所指位置的前方插入元素<br><strong>所有STL容器都提供insert（）成员函数，因此，这是唯一可用于关联式容器身上的一种预定义的inserter</strong><br>在关联式容器和无序容器中，你所给的位置只是一个提示，帮助容器确定从什么地方开始查找正确的安插位置。容器有完全的自由决定要不要忽略它。</li>
+</ol>
+<h4 id="Stream-Iterator-串流迭代器"><a href="#Stream-Iterator-串流迭代器" class="headerlink" title="Stream Iterator 串流迭代器"></a>Stream Iterator 串流迭代器</h4><p>Stream iterator被用来读&#x2F;写stream。使得来自键盘的输入像是个集合（collection），你能够从中读取内容。同样道理，你也可以把一个算法的输出结果重新导向到某个文件或屏幕上。<br>实例如下：<br><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/%E7%AA%97%E5%8F%A3%E8%BE%93%E5%85%A5.png?raw=true" alt="image"><br>详解如下:<br><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/copy_Ioiter.png?raw=true" alt="image"><br>此处用到两个input stream iterator;  </p>
+<ol>
+<li><code>istream_iterator&lt;string&gt;(cin)</code></li>
+</ol>
+<ul>
+<li>会产生一个可从“标准输入串流（standardinput stream） cin”读取数据的stream iterato。其中的template实参string表示这个stream iterator专门读取该种类型的元素。  </li>
+<li>因此每当算法企图处理下一元素时，istream iterator就会将这种企图转化为以下行动<br>  <code>cin &gt;&gt; string </code><br>这些元素通过一般的operator＞＞被读取进来<br>针对string而执行的input操作符通常读取以空白分隔的文字</li>
+</ul>
+<ol start="2">
+<li><code>istream_iterator&lt;string&gt;()</code><br>会调用istream iterator的default构造函数，产生一个代表“串流结束符”（end-of-stream）的迭代器，这个东西代表的意义是：你不能再从中读取任何东西。  <h4 id="Reverse-Itreator-反向迭代器"><a href="#Reverse-Itreator-反向迭代器" class="headerlink" title=" Reverse Itreator 反向迭代器"></a><code> Reverse Itreator</code> 反向迭代器</h4>实例如下：<br><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/reverseIterstor.png?raw=true" alt="image"></li>
+</ol>
+<ul>
+<li>所有提供双向（bidirectional）或随机访问（random-access）迭代器的容器都可以通过它们的成员函数rbegin（）和rend（）产生一个反向迭代器。  </li>
+<li>自C++11起还提供了一组对应成员函数crbegin（）和crend（），它们会返回只读反向迭代器  </li>
+<li>采用reverse iterator，所有算法便可以不需特殊处理就以相反方向操作容器，这自然是美事一桩。使用operator++前进至下一元素，被转化为使用operator–后退至前一元素  <h4 id="Move-Iterator-搬移迭代器"><a href="#Move-Iterator-搬移迭代器" class="headerlink" title="Move Iterator 搬移迭代器"></a><code>Move Iterator</code> 搬移迭代器</h4>这种迭代器始自C++11，用来将任何“对低层元素（underlying element）的访问”转换为一个move操作。也就是说，它们允许从一个容器移动元素至另一个容器，不论是在构造函数内或是在运用算法时。</li>
+</ul>
+<h3 id="仿函式-Functor"><a href="#仿函式-Functor" class="headerlink" title="仿函式 (Functor)"></a>仿函式 (Functor)</h3><pre><code>将类相加相减，一般又内嵌到算法模块
+</code></pre>
+<ol start="3">
+<li>接下来的sort（）算法对所有元素排序</li>
+</ol>
+<h1 id="OOP-面向对象-和GP-泛性编程-的区别"><a href="#OOP-面向对象-和GP-泛性编程-的区别" class="headerlink" title="OOP(面向对象)和GP(泛性编程)的区别"></a>OOP(面向对象)和GP(泛性编程)的区别</h1><h2 id="OOP"><a href="#OOP" class="headerlink" title="OOP"></a>OOP</h2><p>面向对象三大特性</p>
+<ol>
+<li>封装性：将数据以及代码捆绑在一起，避免外界干扰。（如将数据放入private中，外界就访问不了数据了）  </li>
+<li>继承：让子类继承父类的属性以及方法 </li>
+<li>多态： 同一事物表现出不同事物的能力。即向不同对象发送同一消息，不同的对象在接收时会产生不同的行为（重载实现编译时多态，虚函数实现运行时多态）  <h2 id="GP"><a href="#GP" class="headerlink" title="GP"></a>GP</h2></li>
+</ol>
+<ul>
+<li>GP是将datas和methods分开，其间用Iterator联通即可</li>
+</ul>
+<h1 id="容器的共通能力和共同操作"><a href="#容器的共通能力和共同操作" class="headerlink" title="容器的共通能力和共同操作"></a>容器的共通能力和共同操作</h1><h2 id="容器的共通能力"><a href="#容器的共通能力" class="headerlink" title="容器的共通能力"></a>容器的共通能力</h2><p>所有STL容器都必须满足它们。三个最核心的能力是：  </p>
+<ol>
+<li>所有容器提供的都是“value语义”而非“reference语义” 。容器进行元素的安插动作时，内部实施的是copy和&#x2F;或move动作，而不是管理元素的reference。因此理想上STL容器的每个元素都必须能够被copy和move  </li>
+<li>元素在容器内有其特定顺序。每一种容器都会提供若干“返回迭代器”的操作函数，这些迭代器可用来遍历各个元素。</li>
+<li>一般而言，各项操作并非绝对安全，也就是说它们并不会检查每一个可能发生的错误。调用者必须确保传给操作函数的实参符合条件  <h3 id="容器的共通操作"><a href="#容器的共通操作" class="headerlink" title="容器的共通操作"></a>容器的共通操作</h3>C++standard 具体指定了一系列容器共通要求，适用于所有STL 容器。<br>初始化：<br>每个容器类都提供了一个default构造函数、一个copy构造函数和一个析构函数。你可以以某个已知区间的内容作为容器初值，自C++11起你也可以指定一个初值列（initializer list）。<br>共同操作如下：<br><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/%E9%80%9A%E7%94%A8%E6%93%8D%E4%BD%9C.png?raw=true" alt="image"><br><img src="https://github.com/zb-zc/PictureWareHouse/blob/main/%E9%80%9A%E7%94%A8%E6%93%8D%E4%BD%9C2.png?raw=true" alt="image"></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/24/C++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E2%85%A1%E5%85%BC%E8%B0%88%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/" rel="prev" title="C++程序设计Ⅱ兼谈对象模型">
+                  <i class="fa fa-chevron-left"></i> C++程序设计Ⅱ兼谈对象模型
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赵博</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.7/pdfobject.min.js","integrity":"sha256-ph3Dk89VmuTVXG6x/RDzk53SU9LPdAh1tpv0UvnDZ2I="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
